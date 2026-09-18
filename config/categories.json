@@ -1,0 +1,25 @@
+{
+  "categories": [
+    {"id":"javascript","label":"JavaScript / TypeScript","group":"stack","aliases":["JavaScript","TypeScript","JS","TS","React","ReactJS","Vue","VueJS","Angular","AngularJS","Node.js","NodeJS","Node","NestJS","Nest.js","Express","Next.js","NextJS","Nuxt","NuxtJS","Frontend","Front-end"]},
+    {"id":"python","label":"Python","group":"stack","aliases":["Python","Django","Flask","FastAPI"]},
+    {"id":"java","label":"Java","group":"stack","aliases":["Java","Spring Boot","Spring"]},
+    {"id":"dotnet","label":"C# / .NET","group":"stack","aliases":["C#",".NET","ASP.NET","Blazor","dotnet"]},
+    {"id":"php","label":"PHP","group":"stack","aliases":["PHP","Laravel","Symfony","WordPress"]},
+    {"id":"cpp","label":"C / C++","group":"stack","aliases":[],"patterns":["(?<![\\p{L}\\p{N}_])C(?:\\+\\+)?(?![\\p{L}\\p{N}_+#]).{0,60}\\b(?:developers?|engineers?|programmers?|development|programming|embedded)\\b","\\b(?:developers?|engineers?|programmers?|development|programming|embedded)\\b.{0,60}(?<![\\p{L}\\p{N}_])C(?:\\+\\+)?(?![\\p{L}\\p{N}_+#])"]},
+    {"id":"go","label":"Go","group":"stack","aliases":["Golang"],"patterns":["\\bGo\\s+(?:(?:software|backend|back-end|senior|junior)\\s+)*(?:developers?|engineers?)\\b","\\b(?:developers?|engineers?)\\s*[-(/:]?\\s*Go\\b"]},
+    {"id":"rust","label":"Rust","group":"stack","aliases":["Rust"]},
+    {"id":"ruby","label":"Ruby","group":"stack","aliases":["Ruby","Ruby on Rails","Rails"]},
+    {"id":"android","label":"Android","group":"stack","aliases":["Android","Android Developer","Android Engineer"]},
+    {"id":"ios","label":"iOS","group":"stack","aliases":["iOS","iOS Developer","iOS Engineer","Swift","SwiftUI"]},
+    {"id":"sap","label":"SAP / ABAP","group":"enterprise","aliases":["SAP","ABAP","SAP Consultant","SAP Developer"]},
+    {"id":"salesforce","label":"Salesforce","group":"enterprise","aliases":["Salesforce","SFDC","Apex Developer"]},
+    {"id":"dynamics","label":"Dynamics 365","group":"enterprise","aliases":["Dynamics 365","MS Dynamics","Microsoft Dynamics","Navision","Business Central"]},
+    {"id":"servicenow","label":"ServiceNow","group":"enterprise","aliases":["ServiceNow","Service-Now","Service Now"]},
+    {"id":"pm","label":"Product / Project Manager","group":"role","aliases":["Product Manager","Project Manager","Product Owner","Scrum Master","Delivery Manager","Project Lead"]},
+    {"id":"qa","label":"QA / Testing","group":"role","aliases":["QA","Quality Assurance","Tester","Testers","Test Engineer","Test Engineers","Test Automation","QA Engineer"]},
+    {"id":"devops","label":"DevOps / SRE","group":"role","aliases":["DevOps","SRE","Site Reliability Engineer","Cloud Engineer","Infrastructure Engineer","Platform Engineer"]},
+    {"id":"ai","label":"AI / Machine Learning","group":"role","aliases":["Machine Learning","Data Scientist","Data Science","AI Engineer","AI Specialist","Deep Learning","LLM","Computer Vision","NLP"]},
+    {"id":"analyst","label":"Data / Business Analyst","group":"role","aliases":["Business Analyst","Business Analysts","System Analyst","Systems Analyst","Business Systems Analyst","Data Analyst","Data Analysts","BI Analyst","Business Intelligence Analyst"]},
+    {"id":"helpdesk","label":"Helpdesk / IT Support","group":"role","aliases":["Helpdesk","Help Desk","Service Desk","IT Support","Desktop Support","IT Engineer","IT Engineers","IT Support Engineer","System Administrator","Sysadmin"]}
+  ]
+}

@@ -1,0 +1,30 @@
+{
+    "name": "cvbankas-chart/vacancy-statistics",
+    "description": "Daily CVbankas vacancy statistics by programming stack and IT role",
+    "type": "project",
+    "require": {
+        "php": "^8.3",
+        "ext-dom": "*",
+        "ext-mbstring": "*",
+        "ext-pdo": "*",
+        "ext-pdo_sqlite": "*",
+        "guzzlehttp/guzzle": "^7.9",
+        "symfony/css-selector": "^7.3",
+        "symfony/dom-crawler": "^7.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload": { "psr-4": { "CvbankasChart\\": "src/" } },
+    "autoload-dev": { "psr-4": { "CvbankasChart\\Tests\\": "tests/" } },
+    "scripts": {
+        "test": "phpunit",
+        "collect": "@php bin/console.php collect",
+        "build": "@php bin/console.php build"
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": { "php": "8.3.6" },
+        "allow-plugins": {}
+    }
+}

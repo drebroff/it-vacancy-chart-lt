@@ -1,0 +1,181 @@
+{
+    "dates": [
+        "2026-09-18"
+    ],
+    "totals": [
+        286
+    ],
+    "categories": {
+        "javascript": {
+            "id": "javascript",
+            "label": "JavaScript / TypeScript",
+            "group": "stack"
+        },
+        "python": {
+            "id": "python",
+            "label": "Python",
+            "group": "stack"
+        },
+        "java": {
+            "id": "java",
+            "label": "Java",
+            "group": "stack"
+        },
+        "dotnet": {
+            "id": "dotnet",
+            "label": "C# / .NET",
+            "group": "stack"
+        },
+        "php": {
+            "id": "php",
+            "label": "PHP",
+            "group": "stack"
+        },
+        "cpp": {
+            "id": "cpp",
+            "label": "C / C++",
+            "group": "stack"
+        },
+        "go": {
+            "id": "go",
+            "label": "Go",
+            "group": "stack"
+        },
+        "rust": {
+            "id": "rust",
+            "label": "Rust",
+            "group": "stack"
+        },
+        "ruby": {
+            "id": "ruby",
+            "label": "Ruby",
+            "group": "stack"
+        },
+        "android": {
+            "id": "android",
+            "label": "Android",
+            "group": "stack"
+        },
+        "ios": {
+            "id": "ios",
+            "label": "iOS",
+            "group": "stack"
+        },
+        "sap": {
+            "id": "sap",
+            "label": "SAP / ABAP",
+            "group": "enterprise"
+        },
+        "salesforce": {
+            "id": "salesforce",
+            "label": "Salesforce",
+            "group": "enterprise"
+        },
+        "dynamics": {
+            "id": "dynamics",
+            "label": "Dynamics 365",
+            "group": "enterprise"
+        },
+        "servicenow": {
+            "id": "servicenow",
+            "label": "ServiceNow",
+            "group": "enterprise"
+        },
+        "pm": {
+            "id": "pm",
+            "label": "Product / Project Manager",
+            "group": "role"
+        },
+        "qa": {
+            "id": "qa",
+            "label": "QA / Testing",
+            "group": "role"
+        },
+        "devops": {
+            "id": "devops",
+            "label": "DevOps / SRE",
+            "group": "role"
+        },
+        "ai": {
+            "id": "ai",
+            "label": "AI / Machine Learning",
+            "group": "role"
+        },
+        "analyst": {
+            "id": "analyst",
+            "label": "Data / Business Analyst",
+            "group": "role"
+        },
+        "helpdesk": {
+            "id": "helpdesk",
+            "label": "Helpdesk / IT Support",
+            "group": "role"
+        }
+    },
+    "series": {
+        "javascript": [
+            6
+        ],
+        "python": [
+            3
+        ],
+        "java": [
+            3
+        ],
+        "dotnet": [
+            9
+        ],
+        "php": [
+            7
+        ],
+        "cpp": [
+            0
+        ],
+        "go": [
+            1
+        ],
+        "rust": [
+            0
+        ],
+        "ruby": [
+            1
+        ],
+        "android": [
+            0
+        ],
+        "ios": [
+            0
+        ],
+        "sap": [
+            4
+        ],
+        "salesforce": [
+            1
+        ],
+        "dynamics": [
+            2
+        ],
+        "servicenow": [
+            0
+        ],
+        "pm": [
+            32
+        ],
+        "qa": [
+            12
+        ],
+        "devops": [
+            7
+        ],
+        "ai": [
+            6
+        ],
+        "analyst": [
+            20
+        ],
+        "helpdesk": [
+            13
+        ]
+    },
+    "last_updated": "2026-09-18"
+}

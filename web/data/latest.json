@@ -1,0 +1,29 @@
+{
+    "date": "2026-09-18",
+    "total_vacancies": 286,
+    "pages": 6,
+    "counts": {
+        "pm": 32,
+        "analyst": 20,
+        "helpdesk": 13,
+        "qa": 12,
+        "dotnet": 9,
+        "php": 7,
+        "devops": 7,
+        "javascript": 6,
+        "ai": 6,
+        "sap": 4,
+        "python": 3,
+        "java": 3,
+        "dynamics": 2,
+        "go": 1,
+        "ruby": 1,
+        "salesforce": 1,
+        "cpp": 0,
+        "rust": 0,
+        "android": 0,
+        "ios": 0,
+        "servicenow": 0
+    },
+    "generated_at": "2026-09-18T17:24:00+00:00"
+}

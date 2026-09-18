@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>CVbankas IT Vacancy Statistics — Real-Time Job Market Trends</title>
+    <meta name="description" content="Daily Lithuanian IT vacancy statistics by programming languages, enterprise stacks, and roles from en.cvbankas.lt.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body class="dark-theme">
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <div class="logo-icon">📊</div>
+                <div class="logo-text-group">
+                    <h1 class="logo-title">CVbankas <span class="accent-text">IT Trends</span></h1>
+                    <p class="logo-subtitle">Lithuanian IT Market Analytics</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <div class="status-pill" id="status-pill">
+                    <span class="pulse-dot"></span>
+                    <span id="last-updated-label">Loading stats...</span>
+                </div>
+
+                <div class="header-btn-group">
+                    <button id="btn-collect-now" class="btn btn-primary" title="Trigger immediate data crawl">
+                        <span class="btn-icon">⚡</span>
+                        <span class="btn-text-full">Collect Data Now</span>
+                        <span class="btn-text-mobile">Collect</span>
+                    </button>
+
+                    <button id="theme-toggle" class="btn btn-icon-only" title="Toggle Theme" aria-label="Toggle Theme">
+                        <span id="theme-icon">☀️</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- KPI Cards Grid (Responsive 2x2 on mobile, 4-col on desktop) -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">Active Vacancies</div>
+                <div class="kpi-value" id="kpi-total">-</div>
+                <div class="kpi-subtext" id="kpi-total-sub">Total currently listed</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-label">Top Language</div>
+                <div class="kpi-value" id="kpi-top-stack">-</div>
+                <div class="kpi-subtext" id="kpi-top-stack-sub">Most demanded stack</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-label">Top Role</div>
+                <div class="kpi-value" id="kpi-top-role">-</div>
+                <div class="kpi-subtext" id="kpi-top-role-sub">Highest non-dev demand</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-label">Top Enterprise</div>
+                <div class="kpi-value" id="kpi-top-enterprise">-</div>
+                <div class="kpi-subtext" id="kpi-top-enterprise-sub">ERP / CRM platforms</div>
+            </div>
+        </section>
+
+        <!-- Notice banner when history is starting -->
+        <div class="timeline-banner" id="timeline-banner" style="display: none;">
+            <span class="banner-icon">💡</span>
+            <div class="banner-text">
+                <strong>Real data collection started:</strong> Showing today's snapshot. As daily runs execute in GitHub Actions, full time-series lines will connect automatically.
+            </div>
+        </div>
+
+        <!-- Chart Container Card -->
+        <section class="chart-section card">
+            <div class="chart-toolbar">
+                <div class="group-tabs" id="group-tabs">
+                    <button class="tab-btn active" data-group="all">All Categories</button>
+                    <button class="tab-btn" data-group="stack">Languages</button>
+                    <button class="tab-btn" data-group="enterprise">Enterprise</button>
+                    <button class="tab-btn" data-group="role">IT Roles</button>
+                </div>
+
+                <div class="chart-controls">
+                    <div class="time-range-group" id="time-range-group">
+                        <button class="pill-btn" data-range="30">30D</button>
+                        <button class="pill-btn" data-range="90">90D</button>
+                        <button class="pill-btn" data-range="180">6M</button>
+                        <button class="pill-btn active" data-range="all">All Time</button>
+                    </div>
+
+                    <div class="action-btn-group">
+                        <button class="btn btn-secondary btn-sm" id="btn-select-all">Select All</button>
+                        <button class="btn btn-secondary btn-sm" id="btn-deselect-all">Deselect</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile legend toggle header -->
+            <div class="legend-header-mobile">
+                <span class="legend-title">Categories Filter (<span id="active-category-count">21</span>)</span>
+                <button class="btn-text-toggle" id="btn-toggle-legend">Show All ▼</button>
+            </div>
+
+            <!-- Custom Category Chips Legend -->
+            <div class="category-legend collapsed" id="category-legend">
+                <!-- Dynamically populated chips -->
+            </div>
+
+            <div class="chart-wrapper">
+                <canvas id="vacancies-chart"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal: Collect Data Now -->
+    <div class="modal-overlay hidden" id="collect-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <div class="modal-icon">⚡</div>
+                    <div>
+                        <h2 class="modal-title">Collect Data Now</h2>
+                        <p class="modal-subtitle">Trigger GitHub Actions workflow on-demand</p>
+                    </div>
+                </div>
+                <button class="btn-close" id="modal-close-btn" aria-label="Close modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="alert-info">
+                    <strong>Zero-Cost Architecture:</strong> This triggers your free GitHub Actions runner to scrape CVbankas, commit the updated SQLite database, and refresh this dashboard.
+                </div>
+
+                <form id="collect-form">
+                    <div class="form-group">
+                        <label for="gh-repo">GitHub Repository (owner/repo)</label>
+                        <input type="text" id="gh-repo" class="form-input" placeholder="e.g. drebroff/it-vacancy-chart-lt" required autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gh-token">
+                            GitHub Personal Access Token (PAT)
+                            <a href="https://github.com/settings/tokens/new?scopes=repo,workflow&description=CvbankasChartTrigger" target="_blank" rel="noopener" class="label-link">Generate Token ↗</a>
+                        </label>
+                        <div class="input-with-action">
+                            <input type="password" id="gh-token" class="form-input" placeholder="ghp_... or github_pat_..." required autocomplete="off">
+                            <button type="button" class="btn-toggle-eye" id="toggle-token-visibility" aria-label="Toggle token visibility">👁️</button>
+                        </div>
+                        <span class="field-hint">Token is saved only in your browser's private <code>localStorage</code>.</span>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" id="remember-token" checked>
+                        <label for="remember-token">Remember credentials on this device</label>
+                    </div>
+
+                    <div class="progress-box hidden" id="collect-progress">
+                        <div class="progress-spinner"></div>
+                        <div class="progress-text" id="progress-text">Sending trigger to GitHub API...</div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="modal-cancel-btn">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="btn-trigger-workflow">
+                            🚀 Run Workflow Now
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p>Data source: <a href="https://en.cvbankas.lt/?padalinys%5B0%5D=76&min_salary=0&page=1" target="_blank" rel="noopener">cvbankas.lt</a>. Automated with GitHub Actions & SQLite.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

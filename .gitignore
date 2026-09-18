@@ -1,0 +1,9 @@
+/vendor/
+/var/
+/dist/
+/.phpunit.cache/
+/.idea/
+/.tools/
+/.data-worktree/
+.DS_Store
+
