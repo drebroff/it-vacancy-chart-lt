@@ -1,12 +1,12 @@
 {
-    "date": "2026-09-18",
-    "total_vacancies": 286,
+    "date": "2026-09-19",
+    "total_vacancies": 282,
     "pages": 6,
     "counts": {
-        "pm": 32,
+        "pm": 31,
         "analyst": 20,
-        "helpdesk": 13,
         "qa": 12,
+        "helpdesk": 12,
         "dotnet": 9,
         "php": 7,
         "devops": 7,
@@ -25,5 +25,5 @@
         "ios": 0,
         "servicenow": 0
     },
-    "generated_at": "2026-09-18T20:18:09+00:00"
+    "generated_at": "2026-09-19T08:32:49+00:00"
 }

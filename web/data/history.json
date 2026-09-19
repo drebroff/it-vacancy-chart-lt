@@ -1,9 +1,11 @@
 {
     "dates": [
-        "2026-09-18"
+        "2026-09-18",
+        "2026-09-19"
     ],
     "totals": [
-        286
+        286,
+        282
     ],
     "categories": {
         "javascript": {
@@ -114,68 +116,89 @@
     },
     "series": {
         "javascript": [
+            6,
             6
         ],
         "python": [
+            3,
             3
         ],
         "java": [
+            3,
             3
         ],
         "dotnet": [
+            9,
             9
         ],
         "php": [
+            7,
             7
         ],
         "cpp": [
+            0,
             0
         ],
         "go": [
+            1,
             1
         ],
         "rust": [
+            0,
             0
         ],
         "ruby": [
+            1,
             1
         ],
         "android": [
+            0,
             0
         ],
         "ios": [
+            0,
             0
         ],
         "sap": [
+            4,
             4
         ],
         "salesforce": [
+            1,
             1
         ],
         "dynamics": [
+            2,
             2
         ],
         "servicenow": [
+            0,
             0
         ],
         "pm": [
-            32
+            32,
+            31
         ],
         "qa": [
+            12,
             12
         ],
         "devops": [
+            7,
             7
         ],
         "ai": [
+            6,
             6
         ],
         "analyst": [
+            20,
             20
         ],
         "helpdesk": [
-            13
+            13,
+            12
         ]
     },
-    "last_updated": "2026-09-18"
+    "last_updated": "2026-09-19"
 }
