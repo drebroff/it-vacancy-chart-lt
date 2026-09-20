@@ -23,11 +23,13 @@ final class ListingParserTest extends TestCase
         <article class="list_article" id="job_ad_1411001">
             <a class="list_a" href="https://en.cvbankas.lt/python-dev/1-1411001">
                 <h3 class="list_h3" lang="en">Senior Python Developer</h3>
+                <span class="txt_list_2">2 days ago</span>
             </a>
         </article>
         <article class="list_article" id="job_ad_1411002">
             <a class="list_a" href="https://en.cvbankas.lt/qa-lead/1-1411002">
                 <h3 class="list_h3" lang="en">QA Automation Lead</h3>
+                <span class="txt_list_2">13 hours ago</span>
             </a>
         </article>
     </div>
@@ -46,6 +48,8 @@ HTML;
         $this->assertSame(3, $result['maxPage']);
         $this->assertCount(2, $result['jobs']);
         $this->assertSame('Senior Python Developer', $result['jobs']['1411001']['title']);
+        $this->assertSame('2 days ago', $result['jobs']['1411001']['date']);
         $this->assertSame('QA Automation Lead', $result['jobs']['1411002']['title']);
+        $this->assertSame('13 hours ago', $result['jobs']['1411002']['date']);
     }
 }

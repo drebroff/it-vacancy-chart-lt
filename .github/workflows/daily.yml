@@ -9,6 +9,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  issues: write
 
 concurrency:
   group: 'cvbankas-collector'
@@ -40,7 +41,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/cvbankas.sqlite web/data/history.json web/data/latest.json
+          git add data/cvbankas.sqlite web/data/history.json web/data/latest.json web/data/others.json
           if git diff --staged --quiet; then
             echo "No changes in collected data."
           else
@@ -52,6 +53,30 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'web'
+
+      - name: Notify on failure via GitHub Issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date +'%Y-%m-%d')
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          EXISTING_ISSUE=$(gh issue list --state open --search "CVbankas collection failed" --json number -q '.[0].number' 2>/dev/null || true)
+          if [ -n "$EXISTING_ISSUE" ]; then
+            gh issue comment "$EXISTING_ISSUE" --body "⚠️ Run on **$DATE** also failed: [View run logs]($RUN_URL)"
+          else
+            gh issue create \
+              --title "🚨 [Crawl Failure] CVbankas collection failed on $DATE" \
+              --body "### Automated Crawl Failure Alert
+          The daily CVbankas IT vacancy collector workflow failed on **$DATE**.
+
+          - **Workflow Run:** [View run logs]($RUN_URL)
+          - **Trigger:** \`${{ github.event_name }}\`
+          - **Commit:** \`${{ github.sha }}\`
+
+          GitHub has automatically dispatched this notification to your email. Please inspect the workflow run logs to diagnose whether cvbankas.lt changed its markup, experienced rate-limiting, or encountered network errors." \
+              --label "bug"
+          fi
 
   deploy:
     needs: collect

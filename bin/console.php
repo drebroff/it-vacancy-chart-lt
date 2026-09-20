@@ -85,6 +85,7 @@ switch ($command) {
         echo "Build successful! Created:\n";
         echo "  - {$webDataDir}/history.json\n";
         echo "  - {$webDataDir}/latest.json\n";
+        echo "  - {$webDataDir}/others.json\n";
         break;
 
     case 'seed-demo':
@@ -149,5 +150,11 @@ function exportWebData(
     file_put_contents(
         $outputDir.'/latest.json',
         json_encode($latest, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+    );
+
+    $others = $database->getUncategorizedVacancies();
+    file_put_contents(
+        $outputDir.'/others.json',
+        json_encode($others, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
     );
 }

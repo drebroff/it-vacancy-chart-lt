@@ -137,6 +137,58 @@ body {
     white-space: nowrap;
 }
 
+.header-trend-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-left: 0.35rem;
+    padding-left: 0.45rem;
+    border-left: 1px solid var(--border-color);
+}
+
+.header-trend-prefix {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.trend-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.775rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    vertical-align: middle;
+}
+
+.trend-badge.trend-up {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.trend-badge.trend-down {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.trend-badge.trend-neutral {
+    background: rgba(148, 163, 184, 0.12);
+    color: var(--text-muted);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.status-pill .trend-badge {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.4rem;
+}
+
 .pulse-dot {
     width: 7px;
     height: 7px;
@@ -288,6 +340,13 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.04em;
     margin-bottom: 0.25rem;
+}
+
+.kpi-value-group {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    flex-wrap: wrap;
 }
 
 .kpi-value {
@@ -758,6 +817,206 @@ body {
     text-decoration: none;
 }
 
+/* Others Section (Uncategorized Vacancies) */
+.others-section {
+    margin-top: 1.5rem;
+}
+
+.others-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.others-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.others-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.others-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--accent-blue);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.others-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.others-search-wrapper {
+    position: relative;
+    min-width: 260px;
+}
+
+.others-search-input {
+    width: 100%;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.85rem;
+    font-size: 0.825rem;
+    color: var(--text-primary);
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+.others-search-input:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+}
+
+.others-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.875rem;
+}
+
+.others-table thead {
+    background: rgba(0, 0, 0, 0.12);
+}
+
+body.light-theme .others-table thead {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.others-table th {
+    padding: 0.75rem 1rem;
+    font-size: 0.725rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.others-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.others-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.others-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.others-table tbody tr:hover {
+    background-color: var(--bg-card-hover);
+}
+
+.th-date, .col-date {
+    width: 140px;
+    white-space: nowrap;
+}
+
+.date-badge {
+    display: inline-block;
+    padding: 0.25rem 0.55rem;
+    border-radius: 6px;
+    background: rgba(148, 163, 184, 0.12);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.th-label, .col-label {
+    color: var(--text-primary);
+    font-weight: 500;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.vacancy-link {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    display: inline;
+}
+
+.vacancy-link:hover {
+    color: var(--accent-blue);
+    text-decoration: underline;
+}
+
+.others-empty-state {
+    padding: 2.5rem 1rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.others-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.others-pagination-info {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.others-pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-indicator {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    min-width: 45px;
+    text-align: center;
+}
+
 /* ========================================================= */
 /* Mobile Optimizations (Tablets & Phones <= 768px)          */
 /* ========================================================= */
@@ -788,6 +1047,15 @@ body {
 
     .kpi-card {
         padding: 0.75rem 0.85rem;
+    }
+
+    .kpi-value-group {
+        gap: 0.35rem;
+    }
+
+    .kpi-value-group .trend-badge {
+        font-size: 0.72rem;
+        padding: 0.1rem 0.35rem;
     }
 
     .kpi-value {
@@ -853,6 +1121,41 @@ body {
     .form-actions button {
         width: 100%;
     }
+
+    /* Mobile Others Table adjustments */
+    .others-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .others-search-wrapper {
+        min-width: 100%;
+        width: 100%;
+    }
+
+    .others-table th, .others-table td {
+        padding: 0.65rem 0.65rem;
+    }
+
+    .th-date, .col-date {
+        width: 110px;
+    }
+
+    .date-badge {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
+    }
+
+    .col-label {
+        font-size: 0.825rem;
+    }
+
+    .others-footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.65rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -867,5 +1170,27 @@ body {
     .status-pill {
         font-size: 0.7rem;
         padding: 0.3rem 0.55rem;
+    }
+
+    .header-trend-prefix {
+        display: none;
+    }
+
+    .header-trend-group {
+        margin-left: 0.2rem;
+        padding-left: 0.3rem;
+    }
+
+    .th-date, .col-date {
+        width: 95px;
+    }
+
+    .date-badge {
+        font-size: 0.68rem;
+        padding: 0.15rem 0.35rem;
+    }
+
+    .col-label {
+        font-size: 0.8rem;
     }
 }

@@ -26,6 +26,10 @@
                 <div class="status-pill" id="status-pill">
                     <span class="pulse-dot"></span>
                     <span id="last-updated-label">Loading stats...</span>
+                    <span class="header-trend-group" title="Total change since baseline (2026-09-20)">
+                        <span class="header-trend-prefix">Total:</span>
+                        <span class="trend-badge trend-neutral" id="header-total-trend">0%</span>
+                    </span>
                 </div>
 
                 <div class="header-btn-group">
@@ -48,8 +52,11 @@
         <section class="kpi-grid">
             <div class="kpi-card">
                 <div class="kpi-label">Active Vacancies</div>
-                <div class="kpi-value" id="kpi-total">-</div>
-                <div class="kpi-subtext" id="kpi-total-sub">Total currently listed</div>
+                <div class="kpi-value-group">
+                    <span class="kpi-value" id="kpi-total">-</span>
+                    <span class="trend-badge trend-neutral" id="kpi-total-trend">0%</span>
+                </div>
+                <div class="kpi-subtext" id="kpi-total-sub">vs yesterday</div>
             </div>
 
             <div class="kpi-card">
@@ -117,6 +124,50 @@
 
             <div class="chart-wrapper">
                 <canvas id="vacancies-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Others Section: Uncategorized Vacancies -->
+        <section class="others-section card" id="others-section">
+            <div class="others-header">
+                <div class="others-title-group">
+                    <div class="others-title-row">
+                        <h2 class="others-title">Others</h2>
+                        <span class="badge" id="others-count">0</span>
+                    </div>
+                    <p class="others-subtitle">Vacancies not matching any defined category, updated on each crawl.</p>
+                </div>
+                <div class="others-search-wrapper">
+                    <input type="search" id="others-search" class="form-input others-search-input" placeholder="Search unclassified vacancies..." aria-label="Search unclassified vacancies">
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="others-table" id="others-table">
+                    <thead>
+                        <tr>
+                            <th class="th-date">Date</th>
+                            <th class="th-label">Label</th>
+                        </tr>
+                    </thead>
+                    <tbody id="others-tbody">
+                        <!-- Populated dynamically -->
+                    </tbody>
+                </table>
+                <div class="others-empty-state hidden" id="others-empty">
+                    No unclassified vacancies found.
+                </div>
+            </div>
+
+            <div class="others-footer">
+                <div class="others-pagination-info" id="others-page-info">
+                    Showing 0-0 of 0
+                </div>
+                <div class="others-pagination-controls">
+                    <button class="btn btn-secondary btn-sm" id="others-prev-btn" disabled>&larr; Prev</button>
+                    <span class="page-indicator" id="others-current-page">1 / 1</span>
+                    <button class="btn btn-secondary btn-sm" id="others-next-btn" disabled>Next &rarr;</button>
+                </div>
             </div>
         </section>
     </main>

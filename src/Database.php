@@ -42,6 +42,7 @@ final class Database
                 id INTEGER PRIMARY KEY,
                 title TEXT NOT NULL,
                 url TEXT NOT NULL,
+                posted_date TEXT,
                 first_seen_date TEXT NOT NULL,
                 last_seen_date TEXT NOT NULL,
                 is_active INTEGER NOT NULL DEFAULT 1
@@ -64,6 +65,12 @@ final class Database
             CREATE INDEX IF NOT EXISTS idx_vacancies_active ON vacancies(is_active);
             CREATE INDEX IF NOT EXISTS idx_daily_stats_date ON daily_stats(stat_date);
         ');
+
+        try {
+            $this->pdo->exec('ALTER TABLE vacancies ADD COLUMN posted_date TEXT;');
+        } catch (\Throwable) {
+            // Column already exists
+        }
     }
 
     /**
@@ -102,11 +109,12 @@ final class Database
             $this->pdo->exec('UPDATE vacancies SET is_active = 0');
 
             $upsertVacancy = $this->pdo->prepare('
-                INSERT INTO vacancies (id, title, url, first_seen_date, last_seen_date, is_active)
-                VALUES (:id, :title, :url, :first_seen, :last_seen, 1)
+                INSERT INTO vacancies (id, title, url, posted_date, first_seen_date, last_seen_date, is_active)
+                VALUES (:id, :title, :url, :posted_date, :first_seen, :last_seen, 1)
                 ON CONFLICT(id) DO UPDATE SET
                     title = excluded.title,
                     url = excluded.url,
+                    posted_date = COALESCE(excluded.posted_date, vacancies.posted_date),
                     last_seen_date = excluded.last_seen_date,
                     is_active = 1
             ');
@@ -122,6 +130,7 @@ final class Database
                     ':id' => $jobId,
                     ':title' => $job['title'],
                     ':url' => $job['url'],
+                    ':posted_date' => $job['date'] ?? null,
                     ':first_seen' => $date,
                     ':last_seen' => $date,
                 ]);
@@ -245,6 +254,21 @@ final class Database
             'snapshot' => $snapshot,
             'counts' => $counts,
         ];
+    }
+
+    /**
+     * @return array<int, array{date: string, label: string, link: string}>
+     */
+    public function getUncategorizedVacancies(): array
+    {
+        $stmt = $this->pdo->query('
+            SELECT v.title AS label, v.url AS link, COALESCE(v.posted_date, "") AS date
+            FROM vacancies v
+            LEFT JOIN vacancy_categories vc ON v.id = vc.vacancy_id
+            WHERE v.is_active = 1 AND vc.category_id IS NULL
+            ORDER BY v.id DESC
+        ');
+        return $stmt->fetchAll();
     }
 
     /**

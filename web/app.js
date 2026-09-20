@@ -25,6 +25,10 @@ const PALETTE = {
 };
 
 let rawData = null;
+let othersData = [];
+let filteredOthers = [];
+let othersCurrentPage = 1;
+const OTHERS_PAGE_SIZE = 25;
 let chartInstance = null;
 let activeGroup = 'all';
 let activeRange = 'all';
@@ -68,11 +72,21 @@ function setTheme(theme) {
 // Data Fetching
 async function loadData() {
     try {
-        const response = await fetch('data/history.json?t=' + Date.now());
-        if (!response.ok) {
+        const [histResponse, othersResponse] = await Promise.all([
+            fetch('data/history.json?t=' + Date.now()),
+            fetch('data/others.json?t=' + Date.now()).catch(() => null)
+        ]);
+
+        if (!histResponse.ok) {
             throw new Error('history.json not found. Run collector first.');
         }
-        rawData = await response.json();
+        rawData = await histResponse.json();
+
+        if (othersResponse && othersResponse.ok) {
+            othersData = await othersResponse.json();
+        } else {
+            othersData = [];
+        }
 
         // Check if only 1 day is present
         const banner = document.getElementById('timeline-banner');
@@ -83,6 +97,7 @@ async function loadData() {
         renderKPIs();
         renderLegend();
         renderChart();
+        initOthersTable();
 
         const latestDate = rawData.dates[rawData.dates.length - 1] || 'Today';
         document.getElementById('last-updated-label').textContent = `${latestDate} (${rawData.totals[rawData.totals.length - 1] || 0})`;
@@ -92,12 +107,79 @@ async function loadData() {
     }
 }
 
+const BASELINE_DATE = '2026-09-20';
+
+function calculateTrends(dates, totals) {
+    if (!dates || dates.length === 0 || !totals || totals.length === 0) {
+        return {
+            daily: { percent: 0, str: '0%', status: 'neutral' },
+            total: { percent: 0, str: '0%', status: 'neutral' }
+        };
+    }
+
+    const latestIdx = dates.length - 1;
+    const latestDate = dates[latestIdx];
+    const latestTotal = totals[latestIdx];
+
+    // 1. Daily Trend
+    let daily = { percent: 0, str: '0%', status: 'neutral' };
+    if (latestDate > BASELINE_DATE && latestIdx > 0) {
+        const prevTotal = totals[latestIdx - 1];
+        if (prevTotal > 0) {
+            const diff = latestTotal - prevTotal;
+            const pct = (diff / prevTotal) * 100;
+            const sign = pct > 0 ? '+' : '';
+            daily = {
+                percent: pct,
+                str: `${sign}${pct.toFixed(1)}%`,
+                status: pct > 0 ? 'up' : (pct < 0 ? 'down' : 'neutral')
+            };
+        }
+    }
+
+    // 2. Total Trend since BASELINE_DATE
+    let total = { percent: 0, str: '0%', status: 'neutral' };
+    if (latestDate > BASELINE_DATE) {
+        const baselineIdx = dates.indexOf(BASELINE_DATE);
+        const baseTotal = baselineIdx !== -1 ? totals[baselineIdx] : totals[0];
+        if (baseTotal > 0) {
+            const diff = latestTotal - baseTotal;
+            const pct = (diff / baseTotal) * 100;
+            const sign = pct > 0 ? '+' : '';
+            total = {
+                percent: pct,
+                str: `${sign}${pct.toFixed(1)}%`,
+                status: pct > 0 ? 'up' : (pct < 0 ? 'down' : 'neutral')
+            };
+        }
+    }
+
+    return { daily, total };
+}
+
 // Render Top KPIs
 function renderKPIs() {
     if (!rawData || !rawData.totals.length) return;
 
     const latestTotal = rawData.totals[rawData.totals.length - 1];
     document.getElementById('kpi-total').textContent = latestTotal.toLocaleString();
+
+    // Trends calculation
+    const trends = calculateTrends(rawData.dates, rawData.totals);
+
+    const kpiTrend = document.getElementById('kpi-total-trend');
+    if (kpiTrend) {
+        kpiTrend.textContent = trends.daily.str;
+        kpiTrend.className = `trend-badge trend-${trends.daily.status}`;
+        kpiTrend.title = `Daily change vs yesterday: ${trends.daily.str}`;
+    }
+
+    const headerTrend = document.getElementById('header-total-trend');
+    if (headerTrend) {
+        headerTrend.textContent = trends.total.str;
+        headerTrend.className = `trend-badge trend-${trends.total.status}`;
+        headerTrend.title = `Total change since ${BASELINE_DATE}: ${trends.total.str}`;
+    }
 
     const lastIdx = rawData.dates.length - 1;
     let topStack = { id: '', count: -1 };
@@ -528,3 +610,130 @@ async function pollWorkflowStatus(repo, token, textElem) {
     }
     return true;
 }
+
+// Others Table Logic
+function initOthersTable() {
+    filteredOthers = [...othersData];
+    othersCurrentPage = 1;
+
+    const countElem = document.getElementById('others-count');
+    if (countElem) {
+        countElem.textContent = othersData.length;
+    }
+
+    const searchInput = document.getElementById('others-search');
+    if (searchInput) {
+        searchInput.value = '';
+        searchInput.oninput = (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (!query) {
+                filteredOthers = [...othersData];
+            } else {
+                filteredOthers = othersData.filter(item => 
+                    (item.label && item.label.toLowerCase().includes(query)) ||
+                    (item.date && item.date.toLowerCase().includes(query))
+                );
+            }
+            othersCurrentPage = 1;
+            renderOthersTable();
+        };
+    }
+
+    const prevBtn = document.getElementById('others-prev-btn');
+    const nextBtn = document.getElementById('others-next-btn');
+
+    if (prevBtn) {
+        prevBtn.onclick = () => {
+            if (othersCurrentPage > 1) {
+                othersCurrentPage--;
+                renderOthersTable();
+            }
+        };
+    }
+
+    if (nextBtn) {
+        nextBtn.onclick = () => {
+            const maxPage = Math.ceil(filteredOthers.length / OTHERS_PAGE_SIZE) || 1;
+            if (othersCurrentPage < maxPage) {
+                othersCurrentPage++;
+                renderOthersTable();
+            }
+        };
+    }
+
+    renderOthersTable();
+}
+
+function renderOthersTable() {
+    const tbody = document.getElementById('others-tbody');
+    const emptyState = document.getElementById('others-empty');
+    const table = document.getElementById('others-table');
+    const pageInfo = document.getElementById('others-page-info');
+    const pageIndicator = document.getElementById('others-current-page');
+    const prevBtn = document.getElementById('others-prev-btn');
+    const nextBtn = document.getElementById('others-next-btn');
+    const countElem = document.getElementById('others-count');
+
+    if (countElem) {
+        countElem.textContent = othersData.length;
+    }
+
+    if (!tbody) return;
+
+    const total = filteredOthers.length;
+    const maxPage = Math.ceil(total / OTHERS_PAGE_SIZE) || 1;
+    if (othersCurrentPage > maxPage) othersCurrentPage = maxPage;
+
+    if (total === 0) {
+        tbody.innerHTML = '';
+        if (emptyState) emptyState.classList.remove('hidden');
+        if (table) table.style.display = 'none';
+        if (pageInfo) pageInfo.textContent = 'Showing 0-0 of 0';
+        if (pageIndicator) pageIndicator.textContent = '1 / 1';
+        if (prevBtn) prevBtn.disabled = true;
+        if (nextBtn) nextBtn.disabled = true;
+        return;
+    }
+
+    if (emptyState) emptyState.classList.add('hidden');
+    if (table) table.style.display = 'table';
+
+    const startIdx = (othersCurrentPage - 1) * OTHERS_PAGE_SIZE;
+    const endIdx = Math.min(startIdx + OTHERS_PAGE_SIZE, total);
+    const pageItems = filteredOthers.slice(startIdx, endIdx);
+
+    tbody.innerHTML = pageItems.map(item => {
+        const safeLabel = escapeHtml(item.label || 'Untitled vacancy');
+        const safeDate = escapeHtml(item.date || '-');
+        const safeLink = escapeHtml(item.link || '#');
+        return `
+            <tr>
+                <td class="col-date"><span class="date-badge">${safeDate}</span></td>
+                <td class="col-label">
+                    <a href="${safeLink}" target="_blank" rel="noopener noreferrer" class="vacancy-link">
+                        ${safeLabel}
+                    </a>
+                </td>
+            </tr>
+        `;
+    }).join('');
+
+    if (pageInfo) {
+        pageInfo.textContent = `Showing ${startIdx + 1}-${endIdx} of ${total}`;
+    }
+    if (pageIndicator) {
+        pageIndicator.textContent = `${othersCurrentPage} / ${maxPage}`;
+    }
+    if (prevBtn) prevBtn.disabled = (othersCurrentPage <= 1);
+    if (nextBtn) nextBtn.disabled = (othersCurrentPage >= maxPage);
+}
+
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+

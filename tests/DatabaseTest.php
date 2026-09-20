@@ -31,13 +31,15 @@ final class DatabaseTest extends TestCase
     public function testRecordSnapshotAndExport(): void
     {
         $jobs = [
-            '101' => ['id' => 101, 'title' => 'Senior Python Developer', 'url' => 'https://en.cvbankas.lt/1-101'],
-            '102' => ['id' => 102, 'title' => 'QA Lead', 'url' => 'https://en.cvbankas.lt/1-102'],
+            '101' => ['id' => 101, 'title' => 'Senior Python Developer', 'url' => 'https://en.cvbankas.lt/1-101', 'date' => '1 day ago'],
+            '102' => ['id' => 102, 'title' => 'QA Lead', 'url' => 'https://en.cvbankas.lt/1-102', 'date' => '5 hours ago'],
+            '103' => ['id' => 103, 'title' => 'Unclassified Specialist', 'url' => 'https://en.cvbankas.lt/1-103', 'date' => '2 days ago'],
         ];
 
         $jobCategories = [
             '101' => ['python'],
             '102' => ['qa'],
+            '103' => [],
         ];
 
         $counts = ['python' => 1, 'qa' => 1];
@@ -47,7 +49,7 @@ final class DatabaseTest extends TestCase
         $latest = $this->database->getLatestSnapshot();
         $this->assertNotNull($latest);
         $this->assertSame('2026-09-18', $latest['snapshot']['snapshot_date']);
-        $this->assertSame(2, (int) $latest['snapshot']['total_vacancies']);
+        $this->assertSame(3, (int) $latest['snapshot']['total_vacancies']);
         $this->assertSame(1, $latest['counts']['python']);
         $this->assertSame(1, $latest['counts']['qa']);
 
@@ -55,6 +57,12 @@ final class DatabaseTest extends TestCase
         $this->assertContains('2026-09-18', $history['dates']);
         $this->assertSame([1], $history['series']['python']);
         $this->assertSame([1], $history['series']['qa']);
+
+        $others = $this->database->getUncategorizedVacancies();
+        $this->assertCount(1, $others);
+        $this->assertSame('Unclassified Specialist', $others[0]['label']);
+        $this->assertSame('https://en.cvbankas.lt/1-103', $others[0]['link']);
+        $this->assertSame('2 days ago', $others[0]['date']);
     }
 
     public function testSeedDemoData(): void
