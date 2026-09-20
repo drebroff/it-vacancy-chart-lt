@@ -20,13 +20,13 @@ final class TitleClassifier
         }
     }
 
-    public function classify(string $title): array
+    public function classify(string $title, string $description = ''): array
     {
-        $title = self::normalize($title);
+        $text = self::normalize($title . ($description !== '' ? "\n" . $description : ''));
         $matched = [];
         foreach ($this->rules as $id => $patterns) {
             foreach ($patterns as $pattern) {
-                if (preg_match('~'.$pattern.'~iu', $title) === 1) {
+                if (preg_match('~'.$pattern.'~iu', $text) === 1) {
                     $matched[] = $id;
                     break;
                 }
@@ -39,7 +39,7 @@ final class TitleClassifier
     {
         $counts = array_fill_keys(array_keys($this->rules), 0);
         foreach ($jobs as $job) {
-            foreach ($this->classify($job['title']) as $id) {
+            foreach ($this->classify($job['title'], $job['description'] ?? '') as $id) {
                 ++$counts[$id];
             }
         }

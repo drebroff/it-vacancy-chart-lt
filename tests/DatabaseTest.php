@@ -74,4 +74,42 @@ final class DatabaseTest extends TestCase
         $this->assertCount(30, $history['series']['python']);
         $this->assertGreaterThan(0, $history['series']['python'][0]);
     }
+
+    public function testCachingAndPurging(): void
+    {
+        $jobs = [
+            '201' => ['id' => 201, 'title' => 'DevOps Engineer', 'url' => 'https://en.cvbankas.lt/1-201', 'description' => 'AWS, Terraform, Kubernetes.'],
+            '202' => ['id' => 202, 'title' => 'React Dev', 'url' => 'https://en.cvbankas.lt/1-202', 'description' => 'React, Redux.'],
+        ];
+
+        $this->database->recordSnapshot('2026-09-20', $jobs, ['201' => ['devops'], '202' => ['javascript']], ['devops' => 1, 'javascript' => 1], 1);
+
+        // Test cache retrieval
+        $cached = $this->database->getCachedDescriptions([201, 202, 999]);
+        $this->assertArrayHasKey('201', $cached);
+        $this->assertArrayHasKey('202', $cached);
+        $this->assertArrayNotHasKey('999', $cached);
+        $this->assertSame('DevOps Engineer', $cached['201']['title']);
+        $this->assertSame('AWS, Terraform, Kubernetes.', $cached['201']['description']);
+
+        // Purge: currently all are active so 0 purged
+        $purged = $this->database->purgeOldVacancies(30);
+        $this->assertSame(0, $purged);
+    }
+
+    public function testResetData(): void
+    {
+        $jobs = [
+            '301' => ['id' => 301, 'title' => 'C++ Engineer', 'url' => 'https://en.cvbankas.lt/1-301'],
+        ];
+        $this->database->recordSnapshot('2026-09-19', $jobs, ['301' => ['cpp']], ['cpp' => 1], 1);
+        $this->assertNotNull($this->database->getLatestSnapshot());
+
+        $this->database->resetData();
+
+        $this->assertNull($this->database->getLatestSnapshot());
+        $history = $this->database->exportHistory($this->catalog);
+        $this->assertEmpty($history['dates']);
+        $this->assertEmpty($this->database->getUncategorizedVacancies());
+    }
 }

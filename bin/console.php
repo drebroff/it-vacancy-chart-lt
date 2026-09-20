@@ -7,6 +7,7 @@ require __DIR__.'/../vendor/autoload.php';
 use CvbankasChart\CategoryCatalog;
 use CvbankasChart\Database;
 use CvbankasChart\HttpFetcher;
+use CvbankasChart\JobDetailParser;
 use CvbankasChart\ListingParser;
 use CvbankasChart\Scraper;
 use CvbankasChart\TitleClassifier;
@@ -34,13 +35,14 @@ switch ($command) {
         echo "Categories: ".count($catalog->categories)."\n\n";
 
         $client = new Client();
-        // Wait 1.5 seconds between requests for rate-limiting
+        // Wait 1.5 seconds between requests for rate-limiting listing pages
         $fetcher = new HttpFetcher($client, static fn (int $sec) => usleep($sec * 750000));
         $parser = new ListingParser();
-        $scraper = new Scraper($fetcher, $parser);
+        $detailParser = new JobDetailParser();
+        $scraper = new Scraper($fetcher, $parser, $detailParser);
         $classifier = new TitleClassifier($catalog);
 
-        echo "Collecting pages from cvbankas.lt...\n";
+        echo "Collecting listing pages from cvbankas.lt...\n";
         $startTime = microtime(true);
         $result = $scraper->collect(static function (int $page, int $maxPage, int $jobsCount): void {
             printf("  -> Page %d of %d parsed (running total: %d jobs)\n", $page, $maxPage, $jobsCount);
@@ -49,12 +51,29 @@ switch ($command) {
         $jobs = $result['jobs'];
         $pages = $result['pages'];
         $duration = round(microtime(true) - $startTime, 1);
-        echo "\nCollection complete in {$duration}s. Total vacancies: ".count($jobs).", Pages: {$pages}\n";
+        echo "\nListing collection complete in {$duration}s. Total vacancies: ".count($jobs).", Pages: {$pages}\n";
 
-        echo "Classifying vacancies...\n";
+        if (count($jobs) === 0) {
+            throw new RuntimeException('No jobs collected; refusing to save empty snapshot.');
+        }
+
+        echo "\nFetching vacancy descriptions (with 30-day cache check)...\n";
+        $cachedJobs = $database->getCachedDescriptions(array_keys($jobs));
+        $detailStart = microtime(true);
+        $lastReport = 0;
+        $scraper->fetchJobDetails($jobs, $cachedJobs, static function (int $current, int $total, int $cacheHits, int $newFetches) use (&$lastReport): void {
+            if ($current === $total || $current - $lastReport >= 25) {
+                $lastReport = $current;
+                printf("  -> Progress: %d / %d (cache hits: %d, new fetches: %d)\n", $current, $total, $cacheHits, $newFetches);
+            }
+        });
+        $detailDuration = round(microtime(true) - $detailStart, 1);
+        echo "Vacancy descriptions enriched in {$detailDuration}s.\n";
+
+        echo "\nClassifying vacancies (title + page description)...\n";
         $jobCategories = [];
         foreach ($jobs as $id => $job) {
-            $jobCategories[$id] = $classifier->classify($job['title']);
+            $jobCategories[$id] = $classifier->classify($job['title'], $job['description'] ?? '');
         }
         $categoryCounts = $classifier->count($jobs);
 
@@ -70,6 +89,11 @@ switch ($command) {
         $today = date('Y-m-d');
         echo "\nSaving snapshot to SQLite ({$dbPath})...\n";
         $database->recordSnapshot($today, $jobs, $jobCategories, $categoryCounts, $pages);
+
+        $purgedCount = $database->purgeOldVacancies(30);
+        if ($purgedCount > 0) {
+            echo "Purged {$purgedCount} obsolete vacancies older than 30 days from cache.\n";
+        }
 
         echo "Exporting web artifacts...\n";
         exportWebData($database, $catalog, $webDataDir, $jobs, $categoryCounts, $pages);
@@ -115,6 +139,12 @@ switch ($command) {
         }
         break;
 
+    case 'reset':
+        echo "Resetting all database snapshots and historical data...\n";
+        $database->resetData();
+        echo "Database wiped clean.\n";
+        break;
+
     default:
         echo "Usage: php bin/console.php [command]\n\n";
         echo "Commands:\n";
@@ -122,6 +152,7 @@ switch ($command) {
         echo "  build      - Export history.json and latest.json from current DB data\n";
         echo "  seed-demo  - Generate realistic historical curve (e.g. past 120 days) for demo\n";
         echo "  status     - Show latest snapshot and database status\n";
+        echo "  reset      - Wipe all historical database snapshots and vacancies\n";
         break;
 }
 

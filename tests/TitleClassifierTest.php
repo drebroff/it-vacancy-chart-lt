@@ -69,4 +69,28 @@ final class TitleClassifierTest extends TestCase
         $this->assertContains('helpdesk', $this->classifier->classify('IT Support Specialist'));
         $this->assertContains('helpdesk', $this->classifier->classify('Service Desk Engineer'));
     }
+
+    public function testClassifiesKeywordsFromDescription(): void
+    {
+        // Title has no category keyword, but description contains Python and Docker/DevOps
+        $title = 'Senior Software Engineer';
+        $description = 'You will be working with Python, Django, PostgreSQL and DevOps infrastructure.';
+
+        $matches = $this->classifier->classify($title, $description);
+        $this->assertContains('python', $matches);
+        $this->assertContains('devops', $matches);
+    }
+
+    public function testCountWithJobDescriptions(): void
+    {
+        $jobs = [
+            ['title' => 'Software Engineer', 'description' => 'Experience with Laravel and PHP is required.'],
+            ['title' => 'Backend Developer', 'description' => 'Must know Java and Spring Boot.'],
+        ];
+
+        $counts = $this->classifier->count($jobs);
+        $this->assertSame(1, $counts['php']);
+        $this->assertSame(1, $counts['java']);
+        $this->assertSame(0, $counts['python']);
+    }
 }

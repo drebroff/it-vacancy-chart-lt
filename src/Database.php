@@ -43,6 +43,7 @@ final class Database
                 title TEXT NOT NULL,
                 url TEXT NOT NULL,
                 posted_date TEXT,
+                description TEXT,
                 first_seen_date TEXT NOT NULL,
                 last_seen_date TEXT NOT NULL,
                 is_active INTEGER NOT NULL DEFAULT 1
@@ -68,6 +69,12 @@ final class Database
 
         try {
             $this->pdo->exec('ALTER TABLE vacancies ADD COLUMN posted_date TEXT;');
+        } catch (\Throwable) {
+            // Column already exists
+        }
+
+        try {
+            $this->pdo->exec('ALTER TABLE vacancies ADD COLUMN description TEXT;');
         } catch (\Throwable) {
             // Column already exists
         }
@@ -109,12 +116,13 @@ final class Database
             $this->pdo->exec('UPDATE vacancies SET is_active = 0');
 
             $upsertVacancy = $this->pdo->prepare('
-                INSERT INTO vacancies (id, title, url, posted_date, first_seen_date, last_seen_date, is_active)
-                VALUES (:id, :title, :url, :posted_date, :first_seen, :last_seen, 1)
+                INSERT INTO vacancies (id, title, url, posted_date, description, first_seen_date, last_seen_date, is_active)
+                VALUES (:id, :title, :url, :posted_date, :description, :first_seen, :last_seen, 1)
                 ON CONFLICT(id) DO UPDATE SET
                     title = excluded.title,
                     url = excluded.url,
                     posted_date = COALESCE(excluded.posted_date, vacancies.posted_date),
+                    description = COALESCE(NULLIF(excluded.description, ""), vacancies.description),
                     last_seen_date = excluded.last_seen_date,
                     is_active = 1
             ');
@@ -131,6 +139,7 @@ final class Database
                     ':title' => $job['title'],
                     ':url' => $job['url'],
                     ':posted_date' => $job['date'] ?? null,
+                    ':description' => $job['description'] ?? null,
                     ':first_seen' => $date,
                     ':last_seen' => $date,
                 ]);
@@ -269,6 +278,61 @@ final class Database
             ORDER BY v.id DESC
         ');
         return $stmt->fetchAll();
+    }
+
+    /**
+     * Returns map of cached descriptions for given vacancy IDs: id => ['title' => string, 'description' => string]
+     *
+     * @param array<int|string> $jobIds
+     * @return array<string, array{title: string, description: string}>
+     */
+    public function getCachedDescriptions(array $jobIds): array
+    {
+        if (empty($jobIds)) {
+            return [];
+        }
+        $in = implode(',', array_map('intval', $jobIds));
+        $stmt = $this->pdo->query("
+            SELECT id, title, description
+            FROM vacancies
+            WHERE id IN ({$in}) AND description IS NOT NULL AND description != ''
+        ");
+        $cached = [];
+        while ($row = $stmt->fetch()) {
+            $cached[(string) $row['id']] = [
+                'title' => $row['title'],
+                'description' => $row['description'],
+            ];
+        }
+        return $cached;
+    }
+
+    /**
+     * Purges inactive vacancies older than $days days from the cache.
+     */
+    public function purgeOldVacancies(int $days = 30): int
+    {
+        $cutoff = date('Y-m-d', strtotime("-{$days} days"));
+        $stmt = $this->pdo->prepare('
+            DELETE FROM vacancies
+            WHERE is_active = 0 AND last_seen_date < :cutoff
+        ');
+        $stmt->execute([':cutoff' => $cutoff]);
+        return $stmt->rowCount();
+    }
+
+    /**
+     * Resets all collected snapshots, vacancies, categories, and stats.
+     */
+    public function resetData(): void
+    {
+        $this->pdo->exec('
+            DELETE FROM daily_stats;
+            DELETE FROM vacancy_categories;
+            DELETE FROM vacancies;
+            DELETE FROM snapshots;
+            VACUUM;
+        ');
     }
 
     /**
