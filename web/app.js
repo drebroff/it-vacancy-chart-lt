@@ -335,12 +335,16 @@ function renderChart() {
             responsive: true,
             maintainAspectRatio: false,
             interaction: {
-                mode: isSingleDay ? 'nearest' : 'index',
+                mode: 'nearest',
+                axis: 'xy',
                 intersect: false
             },
             plugins: {
                 legend: { display: false },
                 tooltip: {
+                    mode: 'nearest',
+                    axis: 'xy',
+                    intersect: false,
                     backgroundColor: isDark ? '#1e293b' : '#ffffff',
                     titleColor: isDark ? '#f8fafc' : '#0f172a',
                     bodyColor: isDark ? '#cbd5e1' : '#334155',
