@@ -66,8 +66,36 @@ final class TitleClassifierTest extends TestCase
         $this->assertContains('ai', $this->classifier->classify('Senior Data Scientist'));
         $this->assertContains('analyst', $this->classifier->classify('Senior Data Analyst'));
         $this->assertContains('analyst', $this->classifier->classify('Business Analyst (IT)'));
+        $this->assertContains('analyst', $this->classifier->classify('Information Technology and Communications Analyst'));
+        $this->assertContains('analyst', $this->classifier->classify('IT Process Analyst'));
+        $this->assertContains('analyst', $this->classifier->classify('Performance Analyst'));
         $this->assertContains('helpdesk', $this->classifier->classify('IT Support Specialist'));
         $this->assertContains('helpdesk', $this->classifier->classify('Service Desk Engineer'));
+        $this->assertContains('helpdesk', $this->classifier->classify('IT Specialist'));
+        $this->assertContains('helpdesk', $this->classifier->classify('DIGITAL WORKPLACE MAINTENANCE ENGINEER'));
+        $this->assertContains('helpdesk', $this->classifier->classify('Mid - Senior Windows Systems Administrator'));
+        $this->assertContains('pm', $this->classifier->classify('HEAD OF INFORMATION TECHNOLOGY OPERATIONS DEPARTMENT'));
+        $this->assertContains('pm', $this->classifier->classify('IT SYSTEMS DEVELOPMENT MANAGER(S)'));
+        $this->assertContains('pm', $this->classifier->classify('Business Developer - HoReCa'));
+        $this->assertContains('devops', $this->classifier->classify('IT Controls Specialist'));
+        $this->assertContains('security', $this->classifier->classify('DIGITAL SECURITY EXPERT (RENEWABLE ENERGY)'));
+        $this->assertContains('security', $this->classifier->classify('Product Cybersecurity Engineer'));
+        $this->assertContains('security', $this->classifier->classify('Senior Security Engineer'));
+        $this->assertContains('security', $this->classifier->classify('Internal Audit Subject Matter Expert (Technology, DORA and Digital Resilience)'));
+        $this->assertContains('hr', $this->classifier->classify('Senior HR Specialist - Crew Operations'));
+        $this->assertContains('hr', $this->classifier->classify('HR Projects & Employee Experience Specialist (Baltics)'));
+        $this->assertContains('network', $this->classifier->classify('Network Engineer'));
+        $this->assertContains('network', $this->classifier->classify('Telecommunication Services Maintenance Specialist'));
+        $this->assertContains('network', $this->classifier->classify('IT systems and network administrator(s)'));
+    }
+
+    public function testClassifiesDatabaseStack(): void
+    {
+        $this->assertContains('database', $this->classifier->classify('ORACLE DB PROGRAMMER'));
+        $this->assertContains('database', $this->classifier->classify('Senior Data Engineer'));
+        $this->assertContains('database', $this->classifier->classify('Database Administrator (PostgreSQL)'));
+        $this->assertContains('database', $this->classifier->classify('Senior SQL Developer'));
+        $this->assertContains('database', $this->classifier->classify('Firebase / Mobile Backend Engineer'));
     }
 
     public function testClassifiesKeywordsFromDescription(): void

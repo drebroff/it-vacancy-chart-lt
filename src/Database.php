@@ -350,6 +350,7 @@ final class Database
             'android' => 11, 'ios' => 10, 'sap' => 15, 'salesforce' => 12,
             'dynamics' => 9, 'servicenow' => 7, 'pm' => 24, 'qa' => 34,
             'devops' => 30, 'ai' => 16, 'analyst' => 20, 'helpdesk' => 15,
+            'database' => 18, 'security' => 14, 'network' => 12, 'hr' => 8,
         ];
 
         foreach ($catalog->categories as $c) {

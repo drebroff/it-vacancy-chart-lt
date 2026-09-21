@@ -1,10 +1,8 @@
 {
     "dates": [
-        "2026-09-20",
         "2026-09-21"
     ],
     "totals": [
-        277,
         280
     ],
     "categories": {
@@ -53,6 +51,11 @@
             "label": "Ruby",
             "group": "stack"
         },
+        "database": {
+            "id": "database",
+            "label": "Database / Data Engineering",
+            "group": "stack"
+        },
         "android": {
             "id": "android",
             "label": "Android",
@@ -98,6 +101,11 @@
             "label": "DevOps / SRE",
             "group": "role"
         },
+        "security": {
+            "id": "security",
+            "label": "Cybersecurity / InfoSec",
+            "group": "role"
+        },
         "ai": {
             "id": "ai",
             "label": "AI / Machine Learning",
@@ -112,92 +120,93 @@
             "id": "helpdesk",
             "label": "Helpdesk / IT Support",
             "group": "role"
+        },
+        "network": {
+            "id": "network",
+            "label": "Network / Telecommunications",
+            "group": "role"
+        },
+        "hr": {
+            "id": "hr",
+            "label": "HR / Talent Acquisition",
+            "group": "role"
         }
     },
     "series": {
         "javascript": [
-            33,
             33
         ],
         "python": [
-            39,
             40
         ],
         "java": [
-            10,
-            10
+            9
         ],
         "dotnet": [
-            27,
-            29
+            30
         ],
         "php": [
-            12,
             13
         ],
         "cpp": [
-            5,
-            5
+            6
         ],
         "go": [
-            2,
             2
         ],
         "rust": [
-            0,
             0
         ],
         "ruby": [
-            1,
             1
         ],
+        "database": [
+            52
+        ],
         "android": [
-            4,
             4
         ],
         "ios": [
-            7,
             9
         ],
         "sap": [
-            13,
             13
         ],
         "salesforce": [
-            1,
             2
         ],
         "dynamics": [
-            22,
             21
         ],
         "servicenow": [
-            2,
             2
         ],
         "pm": [
-            38,
-            36
+            48
         ],
         "qa": [
-            25,
             25
         ],
         "devops": [
-            27,
-            28
+            29
+        ],
+        "security": [
+            11
         ],
         "ai": [
-            17,
             17
         ],
         "analyst": [
-            28,
-            27
+            34
         ],
         "helpdesk": [
-            19,
-            14
+            43
+        ],
+        "network": [
+            8
+        ],
+        "hr": [
+            2
         ]
     },
     "last_updated": "2026-09-21"

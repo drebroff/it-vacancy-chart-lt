@@ -22,6 +22,10 @@ const PALETTE = {
     ai: { border: '#facc15', bg: 'rgba(250, 204, 21, 0.15)' },
     analyst: { border: '#6366f1', bg: 'rgba(99, 102, 241, 0.15)' },
     helpdesk: { border: '#64748b', bg: 'rgba(100, 116, 139, 0.15)' },
+    database: { border: '#0ea5e9', bg: 'rgba(14, 165, 233, 0.15)' },
+    security: { border: '#dc2626', bg: 'rgba(220, 38, 38, 0.15)' },
+    network: { border: '#14b8a6', bg: 'rgba(20, 184, 166, 0.15)' },
+    hr: { border: '#fb7185', bg: 'rgba(251, 113, 133, 0.15)' },
 };
 
 let rawData = null;
