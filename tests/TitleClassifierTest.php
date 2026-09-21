@@ -89,15 +89,6 @@ final class TitleClassifierTest extends TestCase
         $this->assertContains('network', $this->classifier->classify('IT systems and network administrator(s)'));
     }
 
-    public function testClassifiesDatabaseStack(): void
-    {
-        $this->assertContains('database', $this->classifier->classify('ORACLE DB PROGRAMMER'));
-        $this->assertContains('database', $this->classifier->classify('Senior Data Engineer'));
-        $this->assertContains('database', $this->classifier->classify('Database Administrator (PostgreSQL)'));
-        $this->assertContains('database', $this->classifier->classify('Senior SQL Developer'));
-        $this->assertContains('database', $this->classifier->classify('Firebase / Mobile Backend Engineer'));
-    }
-
     public function testClassifiesKeywordsFromDescription(): void
     {
         // Title has no category keyword, but description contains Python and Docker/DevOps

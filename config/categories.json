@@ -9,7 +9,6 @@
     {"id":"go","label":"Go","group":"stack","aliases":["Golang"],"patterns":["\\bGo\\s+(?:(?:software|backend|back-end|senior|junior)\\s+)*(?:developers?|engineers?)\\b","\\b(?:developers?|engineers?)\\s*[-(/:]?\\s*Go\\b"]},
     {"id":"rust","label":"Rust","group":"stack","aliases":["Rust"]},
     {"id":"ruby","label":"Ruby","group":"stack","aliases":["Ruby","Ruby on Rails","Rails"]},
-    {"id":"database","label":"Database / Data Engineering","group":"stack","aliases":["Database Administrator","Database Developer","Database Engineer","DBA","Data Engineer","Data Engineering","Big Data Engineer","ETL Developer","Oracle","Oracle DB","PostgreSQL","Postgres","MySQL","MariaDB","MongoDB","Redis","Firebase","Firestore","Cassandra","Elasticsearch","ClickHouse","Snowflake","Databricks","BigQuery","PL/SQL","T-SQL","NoSQL","MS SQL","SQL Server"],"patterns":["\\bSQL\\s+(?:developers?|engineers?|programmers?|specialists?|architects?|analysts?)\\b","\\b(?:developers?|engineers?|programmers?)\\s+(?:in\\s+|with\\s+)?SQL\\b","\\b(?:relational\\s+)?databases?\\s+(?:management|administrator|admin|developer|specialist|architect)\\b","\\b(?:MS[-\\s]?SQL|PL\\/SQL|T-SQL|NoSQL)\\b"]},
     {"id":"android","label":"Android","group":"stack","aliases":["Android","Android Developer","Android Engineer"]},
     {"id":"ios","label":"iOS","group":"stack","aliases":["iOS","iOS Developer","iOS Engineer","Swift","SwiftUI"]},
     {"id":"sap","label":"SAP / ABAP","group":"enterprise","aliases":["SAP","ABAP","SAP Consultant","SAP Developer"]},
