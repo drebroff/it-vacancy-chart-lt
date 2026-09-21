@@ -1,6 +1,10 @@
 {
-    "dates": [],
-    "totals": [],
+    "dates": [
+        "2026-09-21"
+    ],
+    "totals": [
+        281
+    ],
     "categories": {
         "javascript": {
             "id": "javascript",
@@ -124,30 +128,78 @@
         }
     },
     "series": {
-        "javascript": [],
-        "python": [],
-        "java": [],
-        "dotnet": [],
-        "php": [],
-        "cpp": [],
-        "go": [],
-        "rust": [],
-        "ruby": [],
-        "android": [],
-        "ios": [],
-        "sap": [],
-        "salesforce": [],
-        "dynamics": [],
-        "servicenow": [],
-        "pm": [],
-        "qa": [],
-        "devops": [],
-        "security": [],
-        "ai": [],
-        "analyst": [],
-        "helpdesk": [],
-        "network": [],
-        "hr": []
+        "javascript": [
+            33
+        ],
+        "python": [
+            40
+        ],
+        "java": [
+            9
+        ],
+        "dotnet": [
+            30
+        ],
+        "php": [
+            13
+        ],
+        "cpp": [
+            6
+        ],
+        "go": [
+            2
+        ],
+        "rust": [
+            0
+        ],
+        "ruby": [
+            1
+        ],
+        "android": [
+            4
+        ],
+        "ios": [
+            9
+        ],
+        "sap": [
+            13
+        ],
+        "salesforce": [
+            2
+        ],
+        "dynamics": [
+            21
+        ],
+        "servicenow": [
+            2
+        ],
+        "pm": [
+            48
+        ],
+        "qa": [
+            25
+        ],
+        "devops": [
+            29
+        ],
+        "security": [
+            11
+        ],
+        "ai": [
+            17
+        ],
+        "analyst": [
+            34
+        ],
+        "helpdesk": [
+            44
+        ],
+        "network": [
+            8
+        ],
+        "hr": [
+            2
+        ]
     },
-    "last_updated": null
+    "last_updated": "2026-09-21"
 }
