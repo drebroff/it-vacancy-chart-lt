@@ -1,21 +1,21 @@
 {
-    "date": "2026-09-26",
-    "total_vacancies": 295,
+    "date": "2026-09-27",
+    "total_vacancies": 288,
     "pages": 6,
     "counts": {
-        "helpdesk": 52,
-        "pm": 48,
+        "helpdesk": 51,
+        "pm": 47,
         "javascript": 34,
         "python": 34,
         "analyst": 34,
         "qa": 29,
         "devops": 29,
         "dotnet": 23,
-        "dynamics": 20,
         "security": 19,
         "ai": 19,
+        "dynamics": 18,
         "php": 17,
-        "sap": 13,
+        "sap": 12,
         "java": 10,
         "network": 8,
         "cpp": 7,
@@ -28,5 +28,5 @@
         "salesforce": 1,
         "rust": 0
     },
-    "generated_at": "2026-09-26T09:08:11+00:00"
+    "generated_at": "2026-09-27T09:50:12+00:00"
 }
