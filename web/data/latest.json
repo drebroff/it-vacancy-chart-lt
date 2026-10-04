@@ -1,11 +1,11 @@
 {
-    "date": "2026-10-03",
-    "total_vacancies": 296,
+    "date": "2026-10-04",
+    "total_vacancies": 292,
     "pages": 6,
     "counts": {
-        "helpdesk": 55,
+        "helpdesk": 53,
         "pm": 42,
-        "javascript": 37,
+        "javascript": 36,
         "python": 36,
         "analyst": 35,
         "qa": 30,
@@ -13,8 +13,8 @@
         "devops": 28,
         "security": 22,
         "dynamics": 19,
-        "php": 18,
-        "ai": 17,
+        "php": 17,
+        "ai": 16,
         "cpp": 8,
         "sap": 8,
         "java": 7,
@@ -28,5 +28,5 @@
         "hr": 1,
         "rust": 0
     },
-    "generated_at": "2026-10-03T09:41:37+00:00"
+    "generated_at": "2026-10-04T10:25:10+00:00"
 }
