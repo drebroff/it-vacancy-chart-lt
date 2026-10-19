@@ -127,18 +127,24 @@
             </div>
         </section>
 
-        <!-- Others Section: Uncategorized Vacancies -->
+        <!-- Vacancies Drilldown Section: Others & PHP Tabs -->
         <section class="others-section card" id="others-section">
             <div class="others-header">
                 <div class="others-title-group">
-                    <div class="others-title-row">
-                        <h2 class="others-title">Others</h2>
-                        <span class="badge" id="others-count">0</span>
+                    <div class="vacancy-segmented-tabs" role="tablist" aria-label="Vacancy category tabs">
+                        <button type="button" class="tab-btn vacancy-tab-btn active" id="tab-btn-others" role="tab" aria-selected="true" data-tab="others">
+                            <span>Others</span>
+                            <span class="badge" id="others-count">0</span>
+                        </button>
+                        <button type="button" class="tab-btn vacancy-tab-btn" id="tab-btn-php" role="tab" aria-selected="false" data-tab="php">
+                            <span>PHP</span>
+                            <span class="badge" id="php-count">0</span>
+                        </button>
                     </div>
-                    <p class="others-subtitle">Vacancies not matching any defined category, updated on each crawl.</p>
+                    <p class="others-subtitle" id="vacancies-subtitle">Vacancies not matching any defined category, updated on each crawl.</p>
                 </div>
                 <div class="others-search-wrapper">
-                    <input type="search" id="others-search" class="form-input others-search-input" placeholder="Search unclassified vacancies..." aria-label="Search unclassified vacancies">
+                    <input type="search" id="others-search" class="form-input others-search-input" placeholder="Search unclassified vacancies..." aria-label="Search vacancies">
                 </div>
             </div>
 
@@ -154,9 +160,6 @@
                         <!-- Populated dynamically -->
                     </tbody>
                 </table>
-                <div class="others-empty-state hidden" id="others-empty">
-                    No unclassified vacancies found.
-                </div>
             </div>
 
             <div class="others-footer">

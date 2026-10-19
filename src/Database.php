@@ -281,6 +281,22 @@ final class Database
     }
 
     /**
+     * @return array<int, array{date: string, label: string, link: string}>
+     */
+    public function getVacanciesByCategory(string $categoryId): array
+    {
+        $stmt = $this->pdo->prepare('
+            SELECT v.title AS label, v.url AS link, COALESCE(v.posted_date, "") AS date
+            FROM vacancies v
+            JOIN vacancy_categories vc ON v.id = vc.vacancy_id
+            WHERE v.is_active = 1 AND vc.category_id = :categoryId
+            ORDER BY v.id DESC
+        ');
+        $stmt->execute([':categoryId' => $categoryId]);
+        return $stmt->fetchAll();
+    }
+
+    /**
      * Returns map of cached descriptions for given vacancy IDs: id => ['title' => string, 'description' => string]
      *
      * @param array<int|string> $jobIds

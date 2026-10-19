@@ -110,6 +110,7 @@ switch ($command) {
         echo "  - {$webDataDir}/history.json\n";
         echo "  - {$webDataDir}/latest.json\n";
         echo "  - {$webDataDir}/others.json\n";
+        echo "  - {$webDataDir}/php.json\n";
         break;
 
     case 'seed-demo':
@@ -187,5 +188,11 @@ function exportWebData(
     file_put_contents(
         $outputDir.'/others.json',
         json_encode($others, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+    );
+
+    $phpVacancies = $database->getVacanciesByCategory('php');
+    file_put_contents(
+        $outputDir.'/php.json',
+        json_encode($phpVacancies, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
     );
 }

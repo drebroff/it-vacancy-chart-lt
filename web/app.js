@@ -28,6 +28,28 @@ const PALETTE = {
 };
 
 let rawData = null;
+let currentVacancyTab = 'others';
+const VACANCY_PAGE_SIZE = 25;
+const vacancyTabs = {
+    others: {
+        id: 'others',
+        data: [],
+        filtered: [],
+        page: 1,
+        query: '',
+        subtitle: 'Vacancies not matching any defined category, updated on each crawl.',
+        placeholder: 'Search unclassified vacancies...'
+    },
+    php: {
+        id: 'php',
+        data: [],
+        filtered: [],
+        page: 1,
+        query: '',
+        subtitle: 'Active vacancies categorized under PHP stack, updated on each crawl.',
+        placeholder: 'Search PHP vacancies...'
+    }
+};
 let othersData = [];
 let filteredOthers = [];
 let othersCurrentPage = 1;
@@ -75,9 +97,10 @@ function setTheme(theme) {
 // Data Fetching
 async function loadData() {
     try {
-        const [histResponse, othersResponse] = await Promise.all([
+        const [histResponse, othersResponse, phpResponse] = await Promise.all([
             fetch('data/history.json?t=' + Date.now()),
-            fetch('data/others.json?t=' + Date.now()).catch(() => null)
+            fetch('data/others.json?t=' + Date.now()).catch(() => null),
+            fetch('data/php.json?t=' + Date.now()).catch(() => null)
         ]);
 
         if (!histResponse.ok) {
@@ -86,10 +109,18 @@ async function loadData() {
         rawData = await histResponse.json();
 
         if (othersResponse && othersResponse.ok) {
-            othersData = await othersResponse.json();
+            vacancyTabs.others.data = await othersResponse.json();
         } else {
-            othersData = [];
+            vacancyTabs.others.data = [];
         }
+
+        if (phpResponse && phpResponse.ok) {
+            vacancyTabs.php.data = await phpResponse.json();
+        } else {
+            vacancyTabs.php.data = [];
+        }
+
+        othersData = vacancyTabs.others.data;
 
         // Check if only 1 day is present
         const banner = document.getElementById('timeline-banner');
@@ -618,31 +649,56 @@ async function pollWorkflowStatus(repo, token, textElem) {
     return true;
 }
 
-// Others Table Logic
+// Vacancies Tabs & Table Logic (Others & PHP)
 function initOthersTable() {
-    filteredOthers = [...othersData];
-    othersCurrentPage = 1;
+    initVacancyTabs();
+}
 
-    const countElem = document.getElementById('others-count');
-    if (countElem) {
-        countElem.textContent = othersData.length;
+function initVacancyTabs() {
+    vacancyTabs.others.filtered = [...vacancyTabs.others.data];
+    vacancyTabs.php.filtered = [...vacancyTabs.php.data];
+    filteredOthers = vacancyTabs.others.filtered;
+
+    const othersCountElem = document.getElementById('others-count');
+    if (othersCountElem) {
+        othersCountElem.textContent = vacancyTabs.others.data.length;
     }
+
+    const phpCountElem = document.getElementById('php-count');
+    if (phpCountElem) {
+        phpCountElem.textContent = vacancyTabs.php.data.length;
+    }
+
+    // Tab buttons setup
+    const tabBtns = document.querySelectorAll('.vacancy-tab-btn');
+    tabBtns.forEach(btn => {
+        btn.onclick = () => {
+            const tabKey = btn.dataset.tab;
+            if (!tabKey || tabKey === currentVacancyTab) return;
+            switchVacancyTab(tabKey);
+        };
+    });
 
     const searchInput = document.getElementById('others-search');
     if (searchInput) {
-        searchInput.value = '';
+        searchInput.value = vacancyTabs[currentVacancyTab].query;
+        searchInput.placeholder = vacancyTabs[currentVacancyTab].placeholder;
         searchInput.oninput = (e) => {
-            const query = e.target.value.toLowerCase().trim();
+            const state = vacancyTabs[currentVacancyTab];
+            const rawQuery = e.target.value;
+            const query = rawQuery.toLowerCase().trim();
+            state.query = rawQuery;
+
             if (!query) {
-                filteredOthers = [...othersData];
+                state.filtered = [...state.data];
             } else {
-                filteredOthers = othersData.filter(item => 
+                state.filtered = state.data.filter(item => 
                     (item.label && item.label.toLowerCase().includes(query)) ||
                     (item.date && item.date.toLowerCase().includes(query))
                 );
             }
-            othersCurrentPage = 1;
-            renderOthersTable();
+            state.page = 1;
+            renderVacanciesTable();
         };
     }
 
@@ -651,27 +707,63 @@ function initOthersTable() {
 
     if (prevBtn) {
         prevBtn.onclick = () => {
-            if (othersCurrentPage > 1) {
-                othersCurrentPage--;
-                renderOthersTable();
+            const state = vacancyTabs[currentVacancyTab];
+            if (state.page > 1) {
+                state.page--;
+                renderVacanciesTable();
             }
         };
     }
 
     if (nextBtn) {
         nextBtn.onclick = () => {
-            const maxPage = Math.ceil(filteredOthers.length / OTHERS_PAGE_SIZE) || 1;
-            if (othersCurrentPage < maxPage) {
-                othersCurrentPage++;
-                renderOthersTable();
+            const state = vacancyTabs[currentVacancyTab];
+            const maxPage = Math.ceil(state.filtered.length / VACANCY_PAGE_SIZE) || 1;
+            if (state.page < maxPage) {
+                state.page++;
+                renderVacanciesTable();
             }
         };
     }
 
-    renderOthersTable();
+    switchVacancyTab(currentVacancyTab);
+}
+
+function switchVacancyTab(tabKey) {
+    if (!vacancyTabs[tabKey]) return;
+    currentVacancyTab = tabKey;
+
+    // Toggle active state on tab buttons
+    document.querySelectorAll('.vacancy-tab-btn').forEach(btn => {
+        const isActive = btn.dataset.tab === tabKey;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+
+    const activeState = vacancyTabs[tabKey];
+
+    // Update section subtitle
+    const subtitleElem = document.getElementById('vacancies-subtitle');
+    if (subtitleElem) {
+        subtitleElem.textContent = activeState.subtitle;
+    }
+
+    // Update search input value and placeholder to preserve tab search state
+    const searchInput = document.getElementById('others-search');
+    if (searchInput) {
+        searchInput.placeholder = activeState.placeholder;
+        searchInput.value = activeState.query;
+    }
+
+    renderVacanciesTable();
 }
 
 function renderOthersTable() {
+    renderVacanciesTable();
+}
+
+function renderVacanciesTable() {
+    const state = vacancyTabs[currentVacancyTab];
     const tbody = document.getElementById('others-tbody');
     const emptyState = document.getElementById('others-empty');
     const table = document.getElementById('others-table');
@@ -679,22 +771,29 @@ function renderOthersTable() {
     const pageIndicator = document.getElementById('others-current-page');
     const prevBtn = document.getElementById('others-prev-btn');
     const nextBtn = document.getElementById('others-next-btn');
-    const countElem = document.getElementById('others-count');
 
-    if (countElem) {
-        countElem.textContent = othersData.length;
+    // Keep badge counters updated
+    const othersCountElem = document.getElementById('others-count');
+    if (othersCountElem) {
+        othersCountElem.textContent = vacancyTabs.others.data.length;
+    }
+    const phpCountElem = document.getElementById('php-count');
+    if (phpCountElem) {
+        phpCountElem.textContent = vacancyTabs.php.data.length;
     }
 
     if (!tbody) return;
 
-    const total = filteredOthers.length;
-    const maxPage = Math.ceil(total / OTHERS_PAGE_SIZE) || 1;
-    if (othersCurrentPage > maxPage) othersCurrentPage = maxPage;
+    const total = state.filtered.length;
+    const maxPage = Math.ceil(total / VACANCY_PAGE_SIZE) || 1;
+    if (state.page > maxPage) state.page = maxPage;
+    if (state.page < 1) state.page = 1;
 
     if (total === 0) {
-        tbody.innerHTML = '';
-        if (emptyState) emptyState.classList.remove('hidden');
-        if (table) table.style.display = 'none';
+        tbody.innerHTML = state.query.trim()
+            ? `<tr><td colspan="2" style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;">No vacancies found matching "${escapeHtml(state.query.trim())}"</td></tr>`
+            : '';
+        if (table) table.style.display = 'table';
         if (pageInfo) pageInfo.textContent = 'Showing 0-0 of 0';
         if (pageIndicator) pageIndicator.textContent = '1 / 1';
         if (prevBtn) prevBtn.disabled = true;
@@ -702,12 +801,11 @@ function renderOthersTable() {
         return;
     }
 
-    if (emptyState) emptyState.classList.add('hidden');
     if (table) table.style.display = 'table';
 
-    const startIdx = (othersCurrentPage - 1) * OTHERS_PAGE_SIZE;
-    const endIdx = Math.min(startIdx + OTHERS_PAGE_SIZE, total);
-    const pageItems = filteredOthers.slice(startIdx, endIdx);
+    const startIdx = (state.page - 1) * VACANCY_PAGE_SIZE;
+    const endIdx = Math.min(startIdx + VACANCY_PAGE_SIZE, total);
+    const pageItems = state.filtered.slice(startIdx, endIdx);
 
     tbody.innerHTML = pageItems.map(item => {
         const safeLabel = escapeHtml(item.label || 'Untitled vacancy');
@@ -729,10 +827,10 @@ function renderOthersTable() {
         pageInfo.textContent = `Showing ${startIdx + 1}-${endIdx} of ${total}`;
     }
     if (pageIndicator) {
-        pageIndicator.textContent = `${othersCurrentPage} / ${maxPage}`;
+        pageIndicator.textContent = `${state.page} / ${maxPage}`;
     }
-    if (prevBtn) prevBtn.disabled = (othersCurrentPage <= 1);
-    if (nextBtn) nextBtn.disabled = (othersCurrentPage >= maxPage);
+    if (prevBtn) prevBtn.disabled = (state.page <= 1);
+    if (nextBtn) nextBtn.disabled = (state.page >= maxPage);
 }
 
 function escapeHtml(str) {

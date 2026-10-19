@@ -63,6 +63,15 @@ final class DatabaseTest extends TestCase
         $this->assertSame('Unclassified Specialist', $others[0]['label']);
         $this->assertSame('https://en.cvbankas.lt/1-103', $others[0]['link']);
         $this->assertSame('2 days ago', $others[0]['date']);
+
+        $pythonJobs = $this->database->getVacanciesByCategory('python');
+        $this->assertCount(1, $pythonJobs);
+        $this->assertSame('Senior Python Developer', $pythonJobs[0]['label']);
+        $this->assertSame('https://en.cvbankas.lt/1-101', $pythonJobs[0]['link']);
+        $this->assertSame('1 day ago', $pythonJobs[0]['date']);
+
+        $emptyJobs = $this->database->getVacanciesByCategory('php');
+        $this->assertEmpty($emptyJobs);
     }
 
     public function testSeedDemoData(): void
