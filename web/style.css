@@ -279,9 +279,6 @@ body {
     background: var(--bg-card-hover);
 }
 
-.btn-text-mobile {
-    display: none;
-}
 
 /* Main Content */
 .main-content {
@@ -585,130 +582,8 @@ body {
     width: 100%;
 }
 
-/* Modal */
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(6px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-    padding: 1rem;
-    transition: opacity 0.2s ease;
-}
-
-.hidden,
-.modal-overlay.hidden {
+.hidden {
     display: none !important;
-}
-
-.modal-card {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    width: 100%;
-    max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes modalPop {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.modal-header {
-    padding: 1.15rem 1.25rem;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.modal-title-group {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-}
-
-.modal-icon {
-    font-size: 1.35rem;
-    background: var(--accent-glow);
-    padding: 0.35rem;
-    border-radius: var(--radius-md);
-}
-
-.modal-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-}
-
-.modal-subtitle {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-}
-
-.btn-close {
-    background: transparent;
-    border: none;
-    font-size: 1.6rem;
-    color: var(--text-muted);
-    cursor: pointer;
-    line-height: 1;
-    padding: 0.25rem;
-    min-width: 36px;
-    min-height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn-close:hover {
-    color: var(--text-primary);
-}
-
-.modal-body {
-    padding: 1.25rem;
-}
-
-.alert-info {
-    background: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    border-radius: var(--radius-md);
-    padding: 0.75rem;
-    font-size: 0.78rem;
-    color: #93c5fd;
-    margin-bottom: 1.1rem;
-    line-height: 1.4;
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-.form-group label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 0.35rem;
-}
-
-.label-link {
-    color: var(--accent-blue);
-    text-decoration: none;
-    font-weight: 500;
 }
 
 .form-input {
@@ -728,78 +603,6 @@ body {
     outline: none;
     border-color: var(--accent-blue);
     box-shadow: 0 0 0 3px var(--accent-glow);
-}
-
-.input-with-action {
-    position: relative;
-    display: flex;
-}
-
-.btn-toggle-eye {
-    position: absolute;
-    right: 0.6rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 1.1rem;
-    padding: 0.4rem;
-}
-
-.field-hint {
-    display: block;
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    margin-top: 0.3rem;
-}
-
-.form-check {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    margin-bottom: 1.25rem;
-}
-
-.progress-box {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 0.85rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.1rem;
-}
-
-.progress-spinner {
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--border-color);
-    border-top-color: var(--accent-blue);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    flex-shrink: 0;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.progress-text {
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--text-primary);
-}
-
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.75rem;
 }
 
 /* Footer */
@@ -1159,32 +962,7 @@ body.light-theme .others-table thead {
         height: 360px;
     }
 
-    .btn-text-full {
-        display: none;
-    }
 
-    .btn-text-mobile {
-        display: inline;
-    }
-
-    .modal-overlay {
-        align-items: flex-end;
-        padding: 0;
-    }
-
-    .modal-card {
-        max-height: 90vh;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    .form-actions {
-        flex-direction: column-reverse;
-    }
-
-    .form-actions button {
-        width: 100%;
-    }
 
     /* Mobile Others Table adjustments */
     .others-header {

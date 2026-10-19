@@ -33,12 +33,6 @@
                 </div>
 
                 <div class="header-btn-group">
-                    <button id="btn-collect-now" class="btn btn-primary" title="Trigger immediate data crawl">
-                        <span class="btn-icon">⚡</span>
-                        <span class="btn-text-full">Collect Data Now</span>
-                        <span class="btn-text-mobile">Collect</span>
-                    </button>
-
                     <button id="theme-toggle" class="btn btn-icon-only" title="Toggle Theme" aria-label="Toggle Theme">
                         <span id="theme-icon">☀️</span>
                     </button>
@@ -175,63 +169,7 @@
         </section>
     </main>
 
-    <!-- Modal: Collect Data Now -->
-    <div class="modal-overlay hidden" id="collect-modal">
-        <div class="modal-card">
-            <div class="modal-header">
-                <div class="modal-title-group">
-                    <div class="modal-icon">⚡</div>
-                    <div>
-                        <h2 class="modal-title">Collect Data Now</h2>
-                        <p class="modal-subtitle">Trigger GitHub Actions workflow on-demand</p>
-                    </div>
-                </div>
-                <button class="btn-close" id="modal-close-btn" aria-label="Close modal">&times;</button>
-            </div>
 
-            <div class="modal-body">
-                <div class="alert-info">
-                    <strong>Zero-Cost Architecture:</strong> This triggers your free GitHub Actions runner to scrape CVbankas, commit the updated SQLite database, and refresh this dashboard.
-                </div>
-
-                <form id="collect-form">
-                    <div class="form-group">
-                        <label for="gh-repo">GitHub Repository (owner/repo)</label>
-                        <input type="text" id="gh-repo" class="form-input" placeholder="e.g. drebroff/it-vacancy-chart-lt" required autocomplete="off">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="gh-token">
-                            GitHub Personal Access Token (PAT)
-                            <a href="https://github.com/settings/tokens/new?scopes=repo,workflow&description=CvbankasChartTrigger" target="_blank" rel="noopener" class="label-link">Generate Token ↗</a>
-                        </label>
-                        <div class="input-with-action">
-                            <input type="password" id="gh-token" class="form-input" placeholder="ghp_... or github_pat_..." required autocomplete="off">
-                            <button type="button" class="btn-toggle-eye" id="toggle-token-visibility" aria-label="Toggle token visibility">👁️</button>
-                        </div>
-                        <span class="field-hint">Token is saved only in your browser's private <code>localStorage</code>.</span>
-                    </div>
-
-                    <div class="form-check">
-                        <input type="checkbox" id="remember-token" checked>
-                        <label for="remember-token">Remember credentials on this device</label>
-                    </div>
-
-                    <div class="progress-box hidden" id="collect-progress">
-                        <div class="progress-spinner"></div>
-                        <div class="progress-text" id="progress-text">Sending trigger to GitHub API...</div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" id="modal-cancel-btn">Cancel</button>
-                        <button type="submit" class="btn btn-primary" id="btn-trigger-workflow">
-                            🚀 Run Workflow Now
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <footer class="app-footer">
         <div class="footer-content">

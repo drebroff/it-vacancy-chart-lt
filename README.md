@@ -17,7 +17,6 @@
 - **Парсер и классификатор:** PHP 8.3 + Guzzle + Symfony DomCrawler. Учитывает пагинацию, вежливые паузы (rate-limiting) и нормализацию названий.
 - **База данных:** SQLite (`data/cvbankas.sqlite`) хранится и версионируется прямо в Git-репозитории.
 - **Веб-дашборд:** [GitHub Pages](web/) со стильным интерактивным графиком на [Chart.js](https://www.chartjs.org/) (тёмная/светлая темы, фильтрация по группам, выбор временных отрезков).
-- **Кнопка «Collect Data Now»:** встроенное модальное окно на дашборде позволяет в 1 клик запустить сбор данных через GitHub REST API без ожидания расписания.
 
 ---
 
@@ -107,12 +106,4 @@ php -S 127.0.0.1:8080 -t web
    - В разделе **Workflow permissions** включите **Read and write permissions**.
 4. Готово! GitHub Actions будет ежедневно обновлять данные и публиковать график на бесплатном адресе `https://<ВАШ_АККАУНТ>.github.io/<РЕПОЗИТОРИЙ>/`.
 
----
 
-## ⚡ Как пользоваться кнопкой «Collect Data Now»
-
-На опубликованном дашборде нажмите **«⚡ Collect Data Now»**:
-1. Введите адрес вашего репозитория (например: `drebroff/it-vacancy-chart-lt`).
-2. Введите ваш [GitHub Personal Access Token](https://github.com/settings/tokens/new?scopes=repo,workflow&description=CvbankasChartTrigger) (с правом `workflow` или `actions:write`).
-3. Токен сохранится исключительно в `localStorage` вашего браузера.
-4. Нажмите **Run Workflow Now** — статус отобразит запуск, выполнение и автоматически перезагрузит график со свежими данными!

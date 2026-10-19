@@ -60,7 +60,6 @@ let activeRange = 'all';
 
 document.addEventListener('DOMContentLoaded', async () => {
     initTheme();
-    setupModal();
     setupControls();
     setupLegendToggle();
     await loadData();
@@ -526,127 +525,6 @@ function setupControls() {
             }
         });
     });
-}
-
-// Modal: Collect Data Now
-function setupModal() {
-    const modal = document.getElementById('collect-modal');
-    const btnOpen = document.getElementById('btn-collect-now');
-    const btnClose = document.getElementById('modal-close-btn');
-    const btnCancel = document.getElementById('modal-cancel-btn');
-    const form = document.getElementById('collect-form');
-    const repoInput = document.getElementById('gh-repo');
-    const tokenInput = document.getElementById('gh-token');
-    const rememberCheck = document.getElementById('remember-token');
-    const progressBox = document.getElementById('collect-progress');
-    const progressText = document.getElementById('progress-text');
-    const btnTrigger = document.getElementById('btn-trigger-workflow');
-    const toggleTokenBtn = document.getElementById('toggle-token-visibility');
-
-    // Restore saved credentials
-    const savedRepo = localStorage.getItem('cvbankas_gh_repo');
-    const savedToken = localStorage.getItem('cvbankas_gh_token');
-    if (savedRepo) repoInput.value = savedRepo;
-    if (savedToken) tokenInput.value = savedToken;
-
-    btnOpen.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-        progressBox.classList.add('hidden');
-        btnTrigger.disabled = false;
-    });
-
-    const closeModal = () => modal.classList.add('hidden');
-    btnClose.addEventListener('click', closeModal);
-    btnCancel.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
-
-    toggleTokenBtn.addEventListener('click', () => {
-        tokenInput.type = tokenInput.type === 'password' ? 'text' : 'password';
-    });
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const repo = repoInput.value.trim();
-        const token = tokenInput.value.trim();
-
-        if (rememberCheck.checked) {
-            localStorage.setItem('cvbankas_gh_repo', repo);
-            localStorage.setItem('cvbankas_gh_token', token);
-        } else {
-            localStorage.removeItem('cvbankas_gh_repo');
-            localStorage.removeItem('cvbankas_gh_token');
-        }
-
-        btnTrigger.disabled = true;
-        progressBox.classList.remove('hidden');
-        progressText.textContent = 'Triggering GitHub Actions workflow...';
-
-        try {
-            const dispatchUrl = `https://api.github.com/repos/${repo}/actions/workflows/daily.yml/dispatches`;
-            const dispatchRes = await fetch(dispatchUrl, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/vnd.github+json',
-                    'Authorization': `Bearer ${token}`,
-                    'X-GitHub-Api-Version': '2022-11-28'
-                },
-                body: JSON.stringify({ ref: 'main' })
-            });
-
-            if (!dispatchRes.ok) {
-                const errJson = await dispatchRes.json().catch(() => ({}));
-                throw new Error(errJson.message || `HTTP ${dispatchRes.status}: Unable to trigger workflow`);
-            }
-
-            progressText.textContent = 'Workflow triggered! Polling runner status (~45-60s)...';
-            await pollWorkflowStatus(repo, token, progressText);
-            progressText.textContent = 'Collection complete! Reloading latest data...';
-            await loadData();
-            setTimeout(closeModal, 1200);
-
-        } catch (err) {
-            console.error('Trigger error:', err);
-            progressText.textContent = `Error: ${err.message}`;
-            btnTrigger.disabled = false;
-        }
-    });
-}
-
-async function pollWorkflowStatus(repo, token, textElem) {
-    const runsUrl = `https://api.github.com/repos/${repo}/actions/runs?event=workflow_dispatch&per_page=1`;
-    let attempts = 0;
-
-    while (attempts < 30) {
-        await new Promise(r => setTimeout(r, 6000));
-        attempts++;
-        try {
-            const res = await fetch(runsUrl, {
-                headers: {
-                    'Accept': 'application/vnd.github+json',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            if (res.ok) {
-                const data = await res.json();
-                const latestRun = data.workflow_runs?.[0];
-                if (latestRun) {
-                    textElem.textContent = `Status: ${latestRun.status} (${latestRun.conclusion || 'running'})...`;
-                    if (latestRun.status === 'completed') {
-                        if (latestRun.conclusion === 'success') {
-                            return true;
-                        } else {
-                            throw new Error(`Workflow completed with status: ${latestRun.conclusion}`);
-                        }
-                    }
-                }
-            }
-        } catch (e) {
-            console.warn('Poll status error:', e);
-        }
-    }
-    return true;
 }
 
 // Vacancies Tabs & Table Logic (Others & PHP)
