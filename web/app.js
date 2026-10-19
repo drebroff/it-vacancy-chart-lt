@@ -109,12 +109,14 @@ async function loadData() {
 
         if (othersResponse && othersResponse.ok) {
             vacancyTabs.others.data = await othersResponse.json();
+            sortVacanciesByFreshness(vacancyTabs.others.data);
         } else {
             vacancyTabs.others.data = [];
         }
 
         if (phpResponse && phpResponse.ok) {
             vacancyTabs.php.data = await phpResponse.json();
+            sortVacanciesByFreshness(vacancyTabs.php.data);
         } else {
             vacancyTabs.php.data = [];
         }
@@ -524,6 +526,41 @@ function setupControls() {
                 toggleDatasetVisibility(chip.dataset.categoryId, false);
             }
         });
+    });
+}
+
+// Calculate vacancy relative age in minutes for chronological sorting (newest first)
+function getVacancyAgeMinutes(dateStr) {
+    if (!dateStr || typeof dateStr !== 'string') return 9999999;
+    const s = dateStr.trim().toLowerCase();
+    if (!s) return 9999999;
+
+    let m = s.match(/(\d+)\s*(?:min|minute)/);
+    if (m) return parseInt(m[1], 10);
+
+    m = s.match(/(\d+)\s*hour/);
+    if (m) return parseInt(m[1], 10) * 60;
+
+    m = s.match(/(\d+)\s*day[s]?\s*ago/);
+    if (m) return parseInt(m[1], 10) * 24 * 60;
+
+    m = s.match(/(\d+)\s*hour[s]?\s*left/);
+    if (m) return (30 * 24 * 60) - (parseInt(m[1], 10) * 60);
+
+    m = s.match(/(\d+)\s*day[s]?\s*left/);
+    if (m) return (30 - parseInt(m[1], 10)) * 24 * 60;
+
+    return 8888888;
+}
+
+function sortVacanciesByFreshness(items) {
+    return items.sort((a, b) => {
+        const ageA = getVacancyAgeMinutes(a.date);
+        const ageB = getVacancyAgeMinutes(b.date);
+        if (ageA === ageB) {
+            return (a.label || '').localeCompare(b.label || '');
+        }
+        return ageA - ageB;
     });
 }
 

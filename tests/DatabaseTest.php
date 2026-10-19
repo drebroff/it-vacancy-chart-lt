@@ -121,4 +121,38 @@ final class DatabaseTest extends TestCase
         $this->assertEmpty($history['dates']);
         $this->assertEmpty($this->database->getUncategorizedVacancies());
     }
+
+    public function testFreshnessSorting(): void
+    {
+        $this->assertSame(45, Database::parseVacancyAgeMinutes('45 minutes ago'));
+        $this->assertSame(120, Database::parseVacancyAgeMinutes('2 hours ago'));
+        $this->assertSame(1440, Database::parseVacancyAgeMinutes('1 days ago'));
+        $this->assertSame(4320, Database::parseVacancyAgeMinutes('3 days ago'));
+        $this->assertSame(36000, Database::parseVacancyAgeMinutes('5 days left'));
+        $this->assertSame(9999999, Database::parseVacancyAgeMinutes(''));
+
+        $jobs = [
+            '1' => ['id' => 1, 'title' => 'Old Job', 'url' => 'https://en.cvbankas.lt/1', 'date' => '10 days ago'],
+            '2' => ['id' => 2, 'title' => 'Expiring Job', 'url' => 'https://en.cvbankas.lt/2', 'date' => '4 days left'],
+            '3' => ['id' => 3, 'title' => 'Brand New Job', 'url' => 'https://en.cvbankas.lt/3', 'date' => '2 hours ago'],
+            '4' => ['id' => 4, 'title' => 'Yesterday Job', 'url' => 'https://en.cvbankas.lt/4', 'date' => '1 days ago'],
+        ];
+
+        $categories = [
+            '1' => ['php'],
+            '2' => ['php'],
+            '3' => ['php'],
+            '4' => ['php'],
+        ];
+
+        $this->database->recordSnapshot('2026-10-19', $jobs, $categories, ['php' => 4], 1);
+
+        $sorted = $this->database->getVacanciesByCategory('php');
+        $this->assertCount(4, $sorted);
+        $this->assertSame('Brand New Job', $sorted[0]['label']);
+        $this->assertSame('Yesterday Job', $sorted[1]['label']);
+        $this->assertSame('Old Job', $sorted[2]['label']);
+        $this->assertSame('Expiring Job', $sorted[3]['label']);
+    }
 }
+

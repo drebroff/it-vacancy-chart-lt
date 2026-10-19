@@ -816,6 +816,14 @@ body.light-theme .others-table thead {
     white-space: nowrap;
 }
 
+.sort-indicator {
+    display: inline-block;
+    margin-left: 0.3rem;
+    font-size: 0.75rem;
+    color: var(--accent-blue);
+    font-weight: 700;
+}
+
 .date-badge {
     display: inline-block;
     padding: 0.25rem 0.55rem;

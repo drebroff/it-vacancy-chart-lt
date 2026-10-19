@@ -61,7 +61,7 @@ final class ListingParser
                 || $node->attr('id') !== 'job_ad_'.$match[1]) {
                 throw new RuntimeException('Invalid job identifier or untranslated title on page '.$expectedPage);
             }
-            $dateNode = $node->filter('span.txt_list_2');
+            $dateNode = $node->filter('span.txt_list_2, span.txt_list_important');
             $postedDate = $dateNode->count() > 0 ? rtrim(trim($dateNode->text()), '.') : '';
             $jobs[$match[1]] = ['id' => $match[1], 'url' => $url, 'title' => $title, 'date' => $postedDate];
         }

@@ -266,6 +266,48 @@ final class Database
     }
 
     /**
+     * Calculates relative age of vacancy in minutes for chronological sorting.
+     */
+    public static function parseVacancyAgeMinutes(string $date): int
+    {
+        $d = trim(strtolower($date));
+        if ($d === '') {
+            return 9999999;
+        }
+        if (preg_match('/(\d+)\s*(?:min|minute)/i', $d, $m)) {
+            return (int) $m[1];
+        }
+        if (preg_match('/(\d+)\s*hour/i', $d, $m)) {
+            return (int) $m[1] * 60;
+        }
+        if (preg_match('/(\d+)\s*day[s]?\s*ago/i', $d, $m)) {
+            return (int) $m[1] * 24 * 60;
+        }
+        if (preg_match('/(\d+)\s*hour[s]?\s*left/i', $d, $m)) {
+            return (30 * 24 * 60) - ((int) $m[1] * 60);
+        }
+        if (preg_match('/(\d+)\s*day[s]?\s*left/i', $d, $m)) {
+            return (30 - (int) $m[1]) * 24 * 60;
+        }
+        return 8888888;
+    }
+
+    /**
+     * @param array<int, array{date: string, label: string, link: string}> $vacancies
+     */
+    public static function sortVacanciesByFreshness(array &$vacancies): void
+    {
+        usort($vacancies, function (array $a, array $b): int {
+            $ageA = self::parseVacancyAgeMinutes($a['date'] ?? '');
+            $ageB = self::parseVacancyAgeMinutes($b['date'] ?? '');
+            if ($ageA === $ageB) {
+                return strcmp($a['label'] ?? '', $b['label'] ?? '');
+            }
+            return $ageA <=> $ageB;
+        });
+    }
+
+    /**
      * @return array<int, array{date: string, label: string, link: string}>
      */
     public function getUncategorizedVacancies(): array
@@ -277,7 +319,9 @@ final class Database
             WHERE v.is_active = 1 AND vc.category_id IS NULL
             ORDER BY v.id DESC
         ');
-        return $stmt->fetchAll();
+        $vacancies = $stmt->fetchAll();
+        self::sortVacanciesByFreshness($vacancies);
+        return $vacancies;
     }
 
     /**
@@ -293,7 +337,9 @@ final class Database
             ORDER BY v.id DESC
         ');
         $stmt->execute([':categoryId' => $categoryId]);
-        return $stmt->fetchAll();
+        $vacancies = $stmt->fetchAll();
+        self::sortVacanciesByFreshness($vacancies);
+        return $vacancies;
     }
 
     /**
