@@ -1,217 +1,232 @@
 [
     {
-        "label": "Artificial Intelligence (AI) Officer",
-        "link": "https://en.cvbankas.lt/dirbtinio-intelekto-di-pareigunas-e-darbas-namuose/1-14162184",
-        "date": "2 days ago"
+        "label": "3D Data Marking Specialist",
+        "link": "https://en.cvbankas.lt/3d-duomenu-zenklinimo-specialistas-e-kaune/1-14167474",
+        "date": "22 minutes ago"
     },
     {
-        "label": "Data and Analytics Manager",
-        "link": "https://en.cvbankas.lt/duomenu-ir-analitikos-vadovas-e-vilniuje/1-14125958",
-        "date": "3 days ago"
+        "label": "Business Development Lead",
+        "link": "https://en.cvbankas.lt/business-development-lead-vilniuje/1-14127728",
+        "date": "1 hours ago"
     },
     {
-        "label": "email commercial manager",
-        "link": "https://en.cvbankas.lt/el-komercijos-vadybininkas-e-kretingoje/1-14160376",
-        "date": "3 days ago"
+        "label": "Self-service product guide",
+        "link": "https://en.cvbankas.lt/savitarnos-produkto-vadovas-vilniuje/1-14167494",
+        "date": "2 hours ago"
     },
     {
-        "label": "Chief Data & Analytics Officer for Baltic states",
-        "link": "https://en.cvbankas.lt/chief-data-analytics-officer-for-baltic-states-kaune/1-14158658",
-        "date": "4 days ago"
+        "label": "IMOS engineer",
+        "link": "https://en.cvbankas.lt/imos-inzinierius-e-alytuje/1-14167156",
+        "date": "4 hours ago"
     },
     {
-        "label": "Information Systems Management Specialist",
-        "link": "https://en.cvbankas.lt/informaciniu-sistemu-valdymo-specialistas-e-vilniuje/1-14153422",
-        "date": "4 days ago"
-    },
-    {
-        "label": "Solutions Consultant",
-        "link": "https://en.cvbankas.lt/solutions-consultant-/1-14158850",
-        "date": "4 days ago"
-    },
-    {
-        "label": "AUTOMATION SOLUTIONS (RPA) PROGRAMMER",
-        "link": "https://en.cvbankas.lt/automatizavimo-sprendimu-rpa-programuotojas-a-vilniuje/1-14158352",
-        "date": "5 days ago"
-    },
-    {
-        "label": "Senior Systems Administrator",
-        "link": "https://en.cvbankas.lt/vyr-sistemu-administratorius-e-senior-systems-administrator-vilniuje/1-14158052",
-        "date": "5 days ago"
-    },
-    {
-        "label": "Solutions Consultant",
-        "link": "https://en.cvbankas.lt/solutions-consultant-vilniuje/1-14158362",
-        "date": "5 days ago"
-    },
-    {
-        "label": "Production Employee",
-        "link": "https://en.cvbankas.lt/production-employee-ukmergeje/1-14124948",
-        "date": "7 days ago"
-    },
-    {
-        "label": "Engineering Manager, Big Data",
-        "link": "https://en.cvbankas.lt/engineering-manager-big-data-vilniuje/1-14124312",
-        "date": "8 days ago"
-    },
-    {
-        "label": "IT architect",
-        "link": "https://en.cvbankas.lt/it-architekte-as-vilniuje/1-14123320",
-        "date": "9 days ago"
-    },
-    {
-        "label": "Join INTUS: AI & Manufacturing Systems Development Lead",
-        "link": "https://en.cvbankas.lt/join-intus-ai-manufacturing-systems-development-lead-siauliuose/1-14151202",
-        "date": "9 days ago"
-    },
-    {
-        "label": "Senior Specialist at the Information Technology Services Center",
-        "link": "https://en.cvbankas.lt/vyresnysis-ioji-specialistas-e-informaciniu-technologiju-paslaugu-centre-vilniuje/1-14150440",
-        "date": "10 days ago"
-    },
-    {
-        "label": "Information systems architect",
-        "link": "https://en.cvbankas.lt/informaciniu-sistemu-architektas-e-vilniuje/1-14149152",
-        "date": "11 days ago"
-    },
-    {
-        "label": "DATA ANALYTICS AND PROCESS AUTOMATION SPECIALIST",
-        "link": "https://en.cvbankas.lt/duomenu-analitikos-ir-procesu-automatizavimo-specialistas-e-klaipedoje/1-14146220",
-        "date": "12 days ago"
-    },
-    {
-        "label": "JUNIOR ENGINEER IN THE SERVICE MANAGEMENT DEPARTMENT - TV TOWER",
-        "link": "https://en.cvbankas.lt/jaunesnysis-inzinierius-paslaugu-valdymo-skyriuje-tv-bokste-vilniuje/1-12760559",
-        "date": "12 days ago"
-    },
-    {
-        "label": "Learning & Development Expert (Baltics)",
-        "link": "https://en.cvbankas.lt/learning-development-expert-baltics-vilniuje/1-14147038",
-        "date": "12 days ago"
-    },
-    {
-        "label": "SAFETY OFFICER(S) in the Operational Resilience Department",
-        "link": "https://en.cvbankas.lt/saugos-igaliotine-is-veiklos-atsparumo-skyriuje-vilniuje/1-14137900",
-        "date": "12 days ago"
-    },
-    {
-        "label": "Building Automation (PVS/BMS) Programmer",
-        "link": "https://en.cvbankas.lt/pastatu-automatikos-pvs-bms-programuotojas-a-vilniuje/1-14144600",
-        "date": "13 days ago"
-    },
-    {
-        "label": "Process Specialist",
-        "link": "https://en.cvbankas.lt/procesu-specialistas-e-vilniuje/1-14144194",
-        "date": "14 days ago"
-    },
-    {
-        "label": "ORACLE PL/SQL PROGRAMMER",
-        "link": "https://en.cvbankas.lt/oracle-pl-sql-programuotojas-a-vilniuje/1-14141874",
-        "date": "17 days ago"
-    },
-    {
-        "label": "💻🍔 IT Team Operations Manager",
-        "link": "https://en.cvbankas.lt/it-komandu-veiklos-vadovas-e-vilniuje/1-14141326",
-        "date": "17 days ago"
-    },
-    {
-        "label": "Database Administrator (PostgreSQL)",
-        "link": "https://en.cvbankas.lt/duomenu-baziu-administratorius-e-postgresql-vilniuje/1-14099057",
-        "date": "18 days ago"
-    },
-    {
-        "label": "IT HR Solutions & Projects Junior Consultant (2-year FTC)",
-        "link": "https://en.cvbankas.lt/it-hr-solutions-projects-junior-consultant-2-year-ftc-vilniuje/1-14139954",
-        "date": "18 days ago"
-    },
-    {
-        "label": "Sales Department Manager - Vilnius",
-        "link": "https://en.cvbankas.lt/pardavimu-departamento-vadovas-e-vilnius-vilniuje/1-14140074",
-        "date": "18 days ago"
-    },
-    {
-        "label": "Senior B2B Digital Marketing Specialist for Lithuanian and EU markets",
-        "link": "https://en.cvbankas.lt/vyresnysis-b2b-skaitmenines-rinkodaros-specialistas-e-lietuvos-ir-es-rinkos-vilniuje/1-14139494",
-        "date": "19 days ago"
-    },
-    {
-        "label": "Windows server administrator - Security Focused",
-        "link": "https://en.cvbankas.lt/windows-server-administrator-security-focused-kaune/1-14138078",
-        "date": "20 days ago"
-    },
-    {
-        "label": "Digital Solutions and Data Team Leader in Kaunas",
-        "link": "https://en.cvbankas.lt/skaitmeniniu-sprendimu-ir-duomenu-komandos-vadovas-e-kaune-kaune/1-14136698",
-        "date": "21 days ago"
-    },
-    {
-        "label": "Vice President - Client Onboarding - Yardi",
-        "link": "https://en.cvbankas.lt/vice-president-client-onboarding-yardi-vilniuje/1-14109854",
-        "date": "21 days ago"
-    },
-    {
-        "label": "DATA ENGINEERING ARCHITECT",
-        "link": "https://en.cvbankas.lt/duomenu-inzinerijos-architektas-e-vilniuje/1-14133328",
-        "date": "5 days left"
-    },
-    {
-        "label": "Information Technology Specialist",
-        "link": "https://en.cvbankas.lt/informaciniu-technologiju-specialiste-as-vilniuje/1-14130024",
-        "date": "5 days left"
-    },
-    {
-        "label": "PROGRAMMER",
-        "link": "https://en.cvbankas.lt/programuotojas-a-klaipedoje/1-14132044",
-        "date": "5 days left"
-    },
-    {
-        "label": "Depositary Services Analyst",
-        "link": "https://en.cvbankas.lt/depositary-services-analyst-vilniuje/1-13605345",
-        "date": "4 days left"
-    },
-    {
-        "label": "Senior Depositary Services Analyst",
-        "link": "https://en.cvbankas.lt/senior-depositary-services-analyst-vilniuje/1-13605349",
-        "date": "4 days left"
-    },
-    {
-        "label": "System Engineer (all genders) IBM POWER / AIX",
-        "link": "https://en.cvbankas.lt/system-engineer-all-genders-ibm-power-aix-kaune/1-14132034",
-        "date": "4 days left"
+        "label": "RPA Controller",
+        "link": "https://en.cvbankas.lt/rpa-kontrolierius-e-vilniuje/1-14166686",
+        "date": "19 hours ago"
     },
     {
         "label": "System Engineer (all genders) Storage",
         "link": "https://en.cvbankas.lt/system-engineer-all-genders-storage-kaune/1-14132046",
+        "date": "19 hours ago"
+    },
+    {
+        "label": "Artificial Intelligence (AI) Officer",
+        "link": "https://en.cvbankas.lt/dirbtinio-intelekto-di-pareigunas-e-darbas-namuose/1-14162184",
+        "date": "3 days ago"
+    },
+    {
+        "label": "Data and Analytics Manager",
+        "link": "https://en.cvbankas.lt/duomenu-ir-analitikos-vadovas-e-vilniuje/1-14125958",
+        "date": "4 days ago"
+    },
+    {
+        "label": "email commercial manager",
+        "link": "https://en.cvbankas.lt/el-komercijos-vadybininkas-e-kretingoje/1-14160376",
+        "date": "4 days ago"
+    },
+    {
+        "label": "Chief Data & Analytics Officer for Baltic states",
+        "link": "https://en.cvbankas.lt/chief-data-analytics-officer-for-baltic-states-kaune/1-14158658",
+        "date": "5 days ago"
+    },
+    {
+        "label": "Information Systems Management Specialist",
+        "link": "https://en.cvbankas.lt/informaciniu-sistemu-valdymo-specialistas-e-vilniuje/1-14153422",
+        "date": "5 days ago"
+    },
+    {
+        "label": "Solutions Consultant",
+        "link": "https://en.cvbankas.lt/solutions-consultant-/1-14158850",
+        "date": "5 days ago"
+    },
+    {
+        "label": "AUTOMATION SOLUTIONS (RPA) PROGRAMMER",
+        "link": "https://en.cvbankas.lt/automatizavimo-sprendimu-rpa-programuotojas-a-vilniuje/1-14158352",
+        "date": "6 days ago"
+    },
+    {
+        "label": "Senior Systems Administrator",
+        "link": "https://en.cvbankas.lt/vyr-sistemu-administratorius-e-senior-systems-administrator-vilniuje/1-14158052",
+        "date": "6 days ago"
+    },
+    {
+        "label": "Solutions Consultant",
+        "link": "https://en.cvbankas.lt/solutions-consultant-vilniuje/1-14158362",
+        "date": "6 days ago"
+    },
+    {
+        "label": "Production Employee",
+        "link": "https://en.cvbankas.lt/production-employee-ukmergeje/1-14124948",
+        "date": "8 days ago"
+    },
+    {
+        "label": "Engineering Manager, Big Data",
+        "link": "https://en.cvbankas.lt/engineering-manager-big-data-vilniuje/1-14124312",
+        "date": "9 days ago"
+    },
+    {
+        "label": "INTERN IN THE CLAIMS AND COMPENSATION DEPARTMENT (INTERNSHIP STARTS IN NOVEMBER)",
+        "link": "https://en.cvbankas.lt/praktikante-as-zalu-ir-kompensaciju-skyriuje-praktikos-pradzia-lapkricio-menesi-vilniuje/1-14123836",
+        "date": "9 days ago"
+    },
+    {
+        "label": "IT architect",
+        "link": "https://en.cvbankas.lt/it-architekte-as-vilniuje/1-14123320",
+        "date": "10 days ago"
+    },
+    {
+        "label": "Senior Specialist at the Information Technology Services Center",
+        "link": "https://en.cvbankas.lt/vyresnysis-ioji-specialistas-e-informaciniu-technologiju-paslaugu-centre-vilniuje/1-14150440",
+        "date": "11 days ago"
+    },
+    {
+        "label": "Information systems architect",
+        "link": "https://en.cvbankas.lt/informaciniu-sistemu-architektas-e-vilniuje/1-14149152",
+        "date": "12 days ago"
+    },
+    {
+        "label": "DATA ANALYTICS AND PROCESS AUTOMATION SPECIALIST",
+        "link": "https://en.cvbankas.lt/duomenu-analitikos-ir-procesu-automatizavimo-specialistas-e-klaipedoje/1-14146220",
+        "date": "13 days ago"
+    },
+    {
+        "label": "JUNIOR ENGINEER IN THE SERVICE MANAGEMENT DEPARTMENT - TV TOWER",
+        "link": "https://en.cvbankas.lt/jaunesnysis-inzinierius-paslaugu-valdymo-skyriuje-tv-bokste-vilniuje/1-12760559",
+        "date": "13 days ago"
+    },
+    {
+        "label": "Learning & Development Expert (Baltics)",
+        "link": "https://en.cvbankas.lt/learning-development-expert-baltics-vilniuje/1-14147038",
+        "date": "13 days ago"
+    },
+    {
+        "label": "Building Automation (PVS/BMS) Programmer",
+        "link": "https://en.cvbankas.lt/pastatu-automatikos-pvs-bms-programuotojas-a-vilniuje/1-14144600",
+        "date": "14 days ago"
+    },
+    {
+        "label": "Process Specialist",
+        "link": "https://en.cvbankas.lt/procesu-specialistas-e-vilniuje/1-14144194",
+        "date": "15 days ago"
+    },
+    {
+        "label": "ORACLE PL/SQL PROGRAMMER",
+        "link": "https://en.cvbankas.lt/oracle-pl-sql-programuotojas-a-vilniuje/1-14141874",
+        "date": "18 days ago"
+    },
+    {
+        "label": "💻🍔 IT Team Operations Manager",
+        "link": "https://en.cvbankas.lt/it-komandu-veiklos-vadovas-e-vilniuje/1-14141326",
+        "date": "18 days ago"
+    },
+    {
+        "label": "Database Administrator (PostgreSQL)",
+        "link": "https://en.cvbankas.lt/duomenu-baziu-administratorius-e-postgresql-vilniuje/1-14099057",
+        "date": "19 days ago"
+    },
+    {
+        "label": "IT HR Solutions & Projects Junior Consultant (2-year FTC)",
+        "link": "https://en.cvbankas.lt/it-hr-solutions-projects-junior-consultant-2-year-ftc-vilniuje/1-14139954",
+        "date": "19 days ago"
+    },
+    {
+        "label": "Sales Department Manager - Vilnius",
+        "link": "https://en.cvbankas.lt/pardavimu-departamento-vadovas-e-vilnius-vilniuje/1-14140074",
+        "date": "19 days ago"
+    },
+    {
+        "label": "Senior B2B Digital Marketing Specialist for Lithuanian and EU markets",
+        "link": "https://en.cvbankas.lt/vyresnysis-b2b-skaitmenines-rinkodaros-specialistas-e-lietuvos-ir-es-rinkos-vilniuje/1-14139494",
+        "date": "20 days ago"
+    },
+    {
+        "label": "Windows server administrator - Security Focused",
+        "link": "https://en.cvbankas.lt/windows-server-administrator-security-focused-kaune/1-14138078",
+        "date": "21 days ago"
+    },
+    {
+        "label": "Digital Solutions and Data Team Leader in Kaunas",
+        "link": "https://en.cvbankas.lt/skaitmeniniu-sprendimu-ir-duomenu-komandos-vadovas-e-kaune-kaune/1-14136698",
+        "date": "22 days ago"
+    },
+    {
+        "label": "Vice President - Client Onboarding - Yardi",
+        "link": "https://en.cvbankas.lt/vice-president-client-onboarding-yardi-vilniuje/1-14109854",
+        "date": "22 days ago"
+    },
+    {
+        "label": "DATA ENGINEERING ARCHITECT",
+        "link": "https://en.cvbankas.lt/duomenu-inzinerijos-architektas-e-vilniuje/1-14133328",
         "date": "4 days left"
+    },
+    {
+        "label": "Information Technology Specialist",
+        "link": "https://en.cvbankas.lt/informaciniu-technologiju-specialiste-as-vilniuje/1-14130024",
+        "date": "4 days left"
+    },
+    {
+        "label": "PROGRAMMER",
+        "link": "https://en.cvbankas.lt/programuotojas-a-klaipedoje/1-14132044",
+        "date": "4 days left"
+    },
+    {
+        "label": "Depositary Services Analyst",
+        "link": "https://en.cvbankas.lt/depositary-services-analyst-vilniuje/1-13605345",
+        "date": "3 days left"
+    },
+    {
+        "label": "Senior Depositary Services Analyst",
+        "link": "https://en.cvbankas.lt/senior-depositary-services-analyst-vilniuje/1-13605349",
+        "date": "3 days left"
+    },
+    {
+        "label": "System Engineer (all genders) IBM POWER / AIX",
+        "link": "https://en.cvbankas.lt/system-engineer-all-genders-ibm-power-aix-kaune/1-14132034",
+        "date": "3 days left"
     },
     {
         "label": "INFORMATION SYSTEMS ENGINEER",
         "link": "https://en.cvbankas.lt/informaciniu-sistemu-inzinierius-e-klaipedoje/1-14130830",
-        "date": "3 days left"
+        "date": "2 days left"
     },
     {
         "label": "INFORMATION SYSTEMS ENGINEER",
         "link": "https://en.cvbankas.lt/informaciniu-sistemu-inzinierius-e-kaune/1-14130760",
-        "date": "3 days left"
+        "date": "2 days left"
     },
     {
         "label": "Creator Partnerships & Video Sourcing Internship (Facebook Growth)",
         "link": "https://en.cvbankas.lt/creator-partnerships-video-sourcing-internship-facebook-growth-vilniuje/1-14129894",
-        "date": "2 days left"
+        "date": "1 day left"
     },
     {
         "label": "IT Systems and Projects Specialist",
         "link": "https://en.cvbankas.lt/it-sistemu-ir-projektu-specialistas-e-vilniuje/1-14129340",
-        "date": "2 days left"
+        "date": "1 day left"
     },
     {
         "label": "Key account manager",
         "link": "https://en.cvbankas.lt/svarbiu-klientu-vadybininkas-e-vilniuje/1-14128982",
-        "date": "2 days left"
-    },
-    {
-        "label": "SENIOR DATABASE ADMINISTRATOR (F/M/D)",
-        "link": "https://en.cvbankas.lt/senior-database-administrator-f-m-d-vilniuje/1-14130870",
         "date": "1 day left"
     }
 ]
